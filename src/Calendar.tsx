@@ -15,7 +15,18 @@ import Event from "Event.tsx";
 import EventModal from "EventModal.tsx";
 import OverFlowModal from "OverFlowModal.tsx";
 
-export function Calendar() {
+interface EventType{
+    id:number,
+    name:string,
+    startTime:string,
+    endTime:string,
+    color:string;    
+}
+
+const Calendar: React.FC<{ events: EventType[], onEventClick: (event: EventType) => void }> = ({ events, onEventClick }) => {
+
+
+export function Calendar: React.FC<{events:EventType[], onEventClick:(event: EventType)=>void}> =()} {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [days, setDays] = useStat([]);
   const [events, setEvents] = useState([]);
@@ -60,6 +71,10 @@ export function Calendar() {
           Next
         </button>
       </header>
+   
+
+    {showEventModal && <EventModal day={selectedDay} closeModal={() =>setShowEventModal(false)}/>}
+    {showOverflowModal && }
     </div>
   );
 }

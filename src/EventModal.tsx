@@ -1,4 +1,3 @@
-import react from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export function EventModal() {}

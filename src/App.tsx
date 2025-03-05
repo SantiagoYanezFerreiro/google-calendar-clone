@@ -1,15 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  addDays,
-  addMonths,
-  startOfWeek,
-  startOfMonth,
-  endOfWeek,
-  endOfMonth,
-  isSameMonth,
-  isSameDay,
-  format,
-} from "date-fns";
 import Calendar from "Calendar.tsx";
 import Event from "Event.tsx";
 import EventModal from "EventModal.tsx";

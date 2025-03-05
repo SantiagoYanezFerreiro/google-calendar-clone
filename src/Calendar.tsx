@@ -15,24 +15,20 @@ import Event from "Event.tsx";
 import EventModal from "EventModal.tsx";
 import OverFlowModal from "OverFlowModal.tsx";
 
-interface EventType{
-    id:number,
-    name:string,
-    startTime:string,
-    endTime:string,
-    color:string;    
+interface EventType {
+  id: number;
+  name: string;
+  startTime: string;
+  endTime: string;
+  color: string;
 }
 
-const Calendar: React.FC<{ events: EventType[], onEventClick: (event: EventType) => void }> = ({ events, onEventClick }) => {
-
-
-export function Calendar: React.FC<{events:EventType[], onEventClick:(event: EventType)=>void}> =()} {
+const Calendar: React.FC<{
+  events: EventType[];
+  onEventClick: (event: EventType) => void;
+}> = ({ events, onEventClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [days, setDays] = useStat([]);
-  const [events, setEvents] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(new Date());
-  const [showEventModal, setShowEventModal] = useState(false);
-  const [showOverflowModal, setShowOverflowModal] = useState(false);
+  const [days, setDays] = useState([]);
 
   useEffect(() => {
     generateCalendarDays();
@@ -43,21 +39,12 @@ export function Calendar: React.FC<{events:EventType[], onEventClick:(event: Eve
     const end = endOfWeek(endOfMonth(currentMonth));
     let currentDay = start;
     const tempDays = [];
-    while (currentDay < end) {
+
+    while (currentDay <= end) {
       tempDays.push(currentDay);
       currentDay = addDays(currentDay, 1);
     }
     setDays(tempDays);
-  };
-
-  const openEventModal = (day) => {
-    setSelectedDay(day);
-    setShowEventModal(true);
-  };
-
-  const openOverflowModal = (day) => {
-    setSelectedDay(day);
-    setShowOverflowModal(true);
   };
 
   return (
@@ -71,10 +58,45 @@ export function Calendar: React.FC<{events:EventType[], onEventClick:(event: Eve
           Next
         </button>
       </header>
-   
 
-    {showEventModal && <EventModal day={selectedDay} closeModal={() =>setShowEventModal(false)}/>}
-    {showOverflowModal && }
+      <div className="calendar-grid">
+        {days.map((day, index) => (
+          <div
+            key={index}
+            className="calendar-day"
+            onClick={() =>
+              onEventClick({
+                id: Date.now(),
+                name: "",
+                startTime: "",
+                endTime: "",
+                color: "",
+              })
+            }
+          >
+            <span>{format(day, "d")}</span>
+            {/* Display events for the day */}
+            {events
+              .filter(
+                (event) =>
+                  format(new Date(event.startTime), "yyyy-MM-dd") ===
+                  format(day, "yyyy-MM-dd")
+              )
+              .slice(0, 2)
+              .map((event, idx) => (
+                <Event key={idx} event={event} />
+              ))}
+            {/* Show +X More if events overflow */}
+            {events.filter(
+              (event) =>
+                format(new Date(event.startTime), "yyyy-MM-dd") ===
+                format(day, "yyyy-MM-dd")
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
+
+export default Calendar;

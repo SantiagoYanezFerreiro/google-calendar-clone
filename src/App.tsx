@@ -29,12 +29,40 @@ const App: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Save a new event or update an existing event handleSaveEvent
+  const handleSaveEvent = (event: EventType) => {
+    setEvents((prevEvents) => {
+      const eventsExists = prevEvents.some((e) => e.id === event.id);
+      return eventsExists
+        ? prevEvents.map((e) => (e.id === event.id ? event : e))
+        : [...prevEvents, { ...event, id: Date.now() }];
+    });
+    setIsModalOpen(false);
+  };
+
   // Delete an event by id handleDeleteEvent
+  const handleDeleteEvent = (id: number) => {
+    setEvents(events.filter((event) => event.id !== id));
+    setIsModalOpen(false);
+  };
+
   // When an event is clicked in the Calendar, open the modal for editing handleEventClick
+  const handleEventClick = (event: EventType) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
 
   return (
     <div>
       <h1>Google Calendar Clone</h1>
+      <Calendar events={events} onEventClick={handleEventClick} />
+      {isModalOpen && (
+        <EventModal
+          event={selectedEvent}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSaveEvent}
+          onDelete={handleDeleteEvent}
+        />
+      )}
     </div>
   );
 };

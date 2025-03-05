@@ -15,14 +15,6 @@ import Event from "Event.tsx";
 import EventModal from "EventModal.tsx";
 import OverFlowModal from "OverFlowModal.tsx";
 
-interface EventType {
-  id: number;
-  name: string;
-  startTime: string;
-  endTime: string;
-  color: string;
-}
-
 const Calendar: React.FC<{
   events: EventType[];
   onEventClick: (event: EventType) => void;

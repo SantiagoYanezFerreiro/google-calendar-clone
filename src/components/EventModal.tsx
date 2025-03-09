@@ -6,8 +6,8 @@ import {Event} from "../"
 interface EventModalProps {
   event: EventType | null;
   onClose: () => void;
-  onDelete: (event:EventType) =>void;
-  onSave: (id:number) =>void;
+  onSave: (event:EventType) =>void;
+  onDelete: (id:number) =>void;
 }
 
 const EventModal:React.FC<EventModalProps> =({event,onClose,onDelete,onSave}) => {

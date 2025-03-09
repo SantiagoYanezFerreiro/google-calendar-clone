@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Calendar from "./components/Calendar.tsx";
 import EventModal from "./components/EventModal";
-import { EventType } from "./types/eventTypes.ts";
+import { EventType } from "./types/eventTypes";
 import "./App.css";
 import "index.css";
 
@@ -42,13 +42,13 @@ const App: React.FC = () => {
     setEvents(events.filter((event) => event.id !== id));
     setIsModalOpen(false);
   };
-
+  
   // When an event is clicked in the Calendar, open the modal for editing handleEventClick
   const handleEventClick = (event: EventType) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
   };
-
+  
   return (
     <div>
       <h1>Google Calendar Clone</h1>

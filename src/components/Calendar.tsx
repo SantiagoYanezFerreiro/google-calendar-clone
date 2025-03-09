@@ -11,7 +11,7 @@ import {
 } from "date-fns";
 import { EventType } from "../types/eventTypes.ts";
 import Event from "./Event";
-import OverflowModal from "./OverflowModal";
+import OverflowModal from "./OverflowModal.tsx";
 
 interface CalendarProps {
   events: EventType[];
@@ -58,17 +58,39 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
       </header>
 
       <div className="calendar-grid">
-        {days.map((day, index) => {
-          //Filter Events for the specific day
-          const eventsForDay = events.filter(
-            (event) => format(new Date(event.startTime, "YYYY-MM-DD"))===format(day,"YYYY-MM-DD"))
-          <div key={index} className="calendar-day">
-
-         
-      }))}
-  
+        {days.map((day,index)=>{
+          //Filter events for specific day
+          const eventsForDay = events.filter((event) => format(new Date(event.startTime), "yyyy-MM-dd") === format(day,"yyyy-mm-dd"));
+          return (<div key={index} className="calendar-day" onClick = {() => onEventClick({
+            id: Date.now(),
+            name: "",
+            startTime: "",
+            endTime: "",
+            color: "#3498db",
+          })}>
+            <span>{format(day,"d")}</span>
+            {eventsForDay.slice(0,2).map((event, idx) => (
+              <Event key={idx} event={event}/>
+            ))}
+            {eventsForDay.length > 2 && (
+              <button onClick={(e) =>{
+                e.stopPropagation();
+                openOverflowModal(day);
+              }}>
+                +More
+              </button>
+            ) }
+          </div>)
+        })}
+        </div>
+        {showOverFlowModal && selectedDay && (
+          <OverFlowModal
+            selectedDay={selectedDay}
+            events={events}
+            closeModal={() =>setShowOverflowModal(false)}
+          />
+        )}
     </div>
-  );
-};
+)}
 
 export default Calendar;

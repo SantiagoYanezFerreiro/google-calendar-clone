@@ -10,9 +10,8 @@ import {
   format,
 } from "date-fns";
 import { EventType } from "../types/eventTypes.ts";
-import Event from "./Event.tsx";
-import OverflowModal from "./OverflowModal.tsx";
-import Calendar from "..Calendar/";
+import Event from "./Event";
+import OverflowModal from "./OverflowModal";
 
 interface CalendarProps {
   events: EventType[];
@@ -34,7 +33,6 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
     const end = endOfWeek(endOfMonth(currentMonth));
     let currentDay = start;
     const tempDays: Date[] = [];
-
     while (currentDay <= end) {
       tempDays.push(currentDay);
       currentDay = addDays(currentDay, 1);
@@ -60,41 +58,15 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
       </header>
 
       <div className="calendar-grid">
-        {days.map((day, index) => (
-          <div
-            key={index}
-            className="calendar-day"
-            onClick={() =>
-              onEventClick({
-                id: Date.now(),
-                name: "",
-                startTime: "",
-                endTime: "",
-                color: "",
-              })
-            }
-          >
-            <span>{format(day, "d")}</span>
-            {/* Display events for the day */}
-            {events
-              .filter(
-                (event) =>
-                  format(new Date(event.startTime), "yyyy-MM-dd") ===
-                  format(day, "yyyy-MM-dd")
-              )
-              .slice(0, 2)
-              .map((event, idx) => (
-                <Event key={idx} event={event} />
-              ))}
-            {/* Show +X More if events overflow */}
-            {events.filter(
-              (event) =>
-                format(new Date(event.startTime), "yyyy-MM-dd") ===
-                format(day, "yyyy-MM-dd")
-            )}
-          </div>
-        ))}
-      </div>
+        {days.map((day, index) => {
+          //Filter Events for the specific day
+          const eventsForDay = events.filter(
+            (event) => format(new Date(event.startTime, "YYYY-MM-DD"))===format(day,"YYYY-MM-DD"))
+          <div key={index} className="calendar-day">
+
+         
+      }))}
+  
     </div>
   );
 };

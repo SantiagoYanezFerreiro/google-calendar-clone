@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {format} from "date-fns";
 import {EventType} from "../types/eventTypes";
-import {Event} from "../" 
 
 interface EventModalProps {
   event: EventType | null;
@@ -30,6 +29,8 @@ const handleSave= () => {
 const handleDelete = () =>{
   onDelete(eventData.id);
 }
+
+return(<div></div>)
 
 };
 

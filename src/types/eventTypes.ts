@@ -5,3 +5,4 @@ export interface EventType {
   endTime: string;
   color: string;
 }
+

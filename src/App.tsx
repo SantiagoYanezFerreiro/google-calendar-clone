@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Calendar from "./components/Calendar.tsx";
-import Event from "./components/Event.tsx";
-import EventModal from "./components/EventModal.tsx";
-import OverflowModal from "./components/OverflowModal.tsx";
+import EventModal from "./components/EventModal";
 import { EventType } from "./types/eventTypes.ts";
 import "./App.css";
 import "index.css";

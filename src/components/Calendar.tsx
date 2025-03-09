@@ -7,20 +7,23 @@ import {
   startOfMonth,
   endOfWeek,
   endOfMonth,
-  isSameMonth,
-  isSameDay,
   format,
 } from "date-fns";
-import Event from "Event.tsx";
-import EventModal from "EventModal.tsx";
-import OverFlowModal from "OverFlowModal.tsx";
+import { EventType } from "../types/eventTypes.ts";
+import Event from "./Event.tsx";
+import OverflowModal from "./OverflowModal.tsx";
+import Calendar from "..Calendar/";
 
-const Calendar: React.FC<{
+interface CalendarProps {
   events: EventType[];
   onEventClick: (event: EventType) => void;
-}> = ({ events, onEventClick }) => {
+}
+
+const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [days, setDays] = useState([]);
+  const [days, setDays] = useState<Date[]>([]);
+  const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+  const [showOverFlowModal, setShowOverflowModal] = useState(false);
 
   useEffect(() => {
     generateCalendarDays();
@@ -30,7 +33,7 @@ const Calendar: React.FC<{
     const start = startOfWeek(startOfMonth(currentMonth));
     const end = endOfWeek(endOfMonth(currentMonth));
     let currentDay = start;
-    const tempDays = [];
+    const tempDays: Date[] = [];
 
     while (currentDay <= end) {
       tempDays.push(currentDay);
@@ -38,6 +41,11 @@ const Calendar: React.FC<{
     }
     setDays(tempDays);
   };
+
+  const openOverflowModal = (day:Date) =>{
+    setSelectedDay(day);
+    setShowOverflowModal(true);
+  }
 
   return (
     <div>

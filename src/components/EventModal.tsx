@@ -30,8 +30,24 @@ const handleDelete = () =>{
   onDelete(eventData.id);
 }
 
-return(<div></div>)
+return(<div className="modal">
+  <h3>{event? "Edit Event": "Create Event"}</h3>
+  <label>Event Name:</label>
+  <input type="text" name="name" value={eventData.name} onChange={handleChange}/>
 
+  <label>Start Time</label>
+  <input type="datetime-local" name="startTime" value={eventData.startTime} onChange={handleChange}/>
+
+  <label>End Time</label>
+  <input type="datetime-local" name="endTime" value={eventData.endTime} onChange={handleChange}/>
+
+  <label>Color</label>
+  <input type="color" name="color" value={eventData.color} onChange={handleChange}/>
+
+  <button onClick={handleSave}>Save</button>
+  <button onClick={onClose}>Cancel</button>
+  {event && <button onClick={handleDelete}>Delete</button>}
+</div>)
 };
 
 export default EventModal;

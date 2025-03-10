@@ -5,11 +5,18 @@ import "../styles.css";
 
 interface EventProps {
   event: EventType;
+  onClick: (event: EventType) => void;
 }
 
-const Event: React.FC<EventProps> = ({ event }) => {
+const Event: React.FC<EventProps> = ({ event, onClick }) => {
   return (
-    <div className="event">
+    <div
+      className="event"
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick(event);
+      }}
+    >
       <p className="event-name">{event.name}</p>
       <p className="event-time">
         {format(new Date(event.startTime), "HH:mm")} -{" "}

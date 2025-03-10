@@ -84,7 +84,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
         })}
         </div>
         {showOverFlowModal && selectedDay && (
-          <OverFlowModal
+          <OverflowModal
             selectedDay={selectedDay}
             events={events}
             closeModal={() =>setShowOverflowModal(false)}

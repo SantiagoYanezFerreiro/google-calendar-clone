@@ -7,12 +7,11 @@ interface EventProps {
 }
 
 const Event:React.FC<EventProps> = ({event}) =>{
+    return(
     <div>
        <p>{event.name}</p> 
        <p>{format(new Date(event.startTime), "HH-mm")} - {format(new Date(event.endTime), "HH-mm")}</p>
     </div>
-    return(
-        <div></div>
     )
 }
 

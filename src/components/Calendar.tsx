@@ -12,7 +12,7 @@ import {
 import { EventType } from "../types/eventTypes.ts";
 import Event from "./Event";
 import OverflowModal from "./OverflowModal.tsx";
-import "./styles.css";
+import "../styles.css";
 
 interface CalendarProps {
   events: EventType[];
@@ -41,10 +41,10 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
     setDays(tempDays);
   };
 
-  const openOverflowModal = (day:Date) =>{
+  const openOverflowModal = (day: Date) => {
     setSelectedDay(day);
     setShowOverflowModal(true);
-  }
+  };
 
   return (
     <div className="calendar-container">
@@ -59,39 +59,55 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
       </header>
 
       <div className="calendar-grid">
-        {days.map((day,index)=>{
+        {days.map((day, index) => {
           //Filter events for specific day
-          const eventsForDay = events.filter((event) => format(new Date(event.startTime), "yyyy-MM-dd") === format(day,"yyyy-mm-dd"));
-          return (<div key={index} className="calendar-day" onClick = {() => onEventClick({
-            id: Date.now(),
-            name: "",
-            startTime: "",
-            endTime: "",
-            color: "#3498db",
-          })}>
-            <span className="day-number">{format(day,"d")}</span>
-            {eventsForDay.slice(0,2).map((event, idx) => (
-              <Event key={idx} event={event}/>
-            ))}
-            {eventsForDay.length > 2 && (
-              <button className="overflow-button" onClick={(e) =>{
-                e.stopPropagation();
-                openOverflowModal(day);
-              }}>
-                +More
-              </button>
-            ) }
-          </div>)
+          const eventsForDay = events.filter(
+            (event) =>
+              format(new Date(event.startTime), "yyyy-MM-dd") ===
+              format(day, "yyyy-mm-dd")
+          );
+          return (
+            <div
+              key={index}
+              className="calendar-day"
+              onClick={() =>
+                onEventClick({
+                  id: Date.now(),
+                  name: "",
+                  startTime: "",
+                  endTime: "",
+                  color: "#3498db",
+                })
+              }
+            >
+              <span className="day-number">{format(day, "d")}</span>
+              {eventsForDay.slice(0, 2).map((event, idx) => (
+                <Event key={idx} event={event} />
+              ))}
+              {eventsForDay.length > 2 && (
+                <button
+                  className="overflow-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openOverflowModal(day);
+                  }}
+                >
+                  +More
+                </button>
+              )}
+            </div>
+          );
         })}
-        </div>
-        {showOverFlowModal && selectedDay && (
-          <OverflowModal
-            selectedDay={selectedDay}
-            events={events}
-            closeModal={() =>setShowOverflowModal(false)}
-          />
-        )}
+      </div>
+      {showOverFlowModal && selectedDay && (
+        <OverflowModal
+          selectedDay={selectedDay}
+          events={events}
+          closeModal={() => setShowOverflowModal(false)}
+        />
+      )}
     </div>
-)}
+  );
+};
 
 export default Calendar;

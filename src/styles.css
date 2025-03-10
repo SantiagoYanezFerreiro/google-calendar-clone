@@ -32,3 +32,52 @@ h3 {
   gap: 2px;
   margin-top: 10px;
 }
+
+.calendar-day {
+  background-color: #fff;
+  padding: 1px;
+  border: 1px solid #ddd;
+  min-height: 50px;
+  cursor: pointer;
+}
+
+.day-number {
+  font-weight: bold;
+}
+
+.overflow-button {
+  margin-top: 5px;
+  padding: 10px;
+  background: #eee;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  position: fixed;
+  top: 60%;
+  bottom: 20%;
+  z-index: 1000;
+}
+
+.event {
+  background-color: #3498db;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  color: #ccc;
+}
+
+.event-name {
+  margin: 0;
+  font-weight: bold;
+}
+
+.event-time {
+  margin: 0;
+  font-size: 0.85rem;
+}

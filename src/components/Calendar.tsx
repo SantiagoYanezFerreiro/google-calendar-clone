@@ -46,8 +46,8 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   }
 
   return (
-    <div>
-      <header>
+    <div className="calendar-container">
+      <header className="calendar-header">
         <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
           Previous
         </button>
@@ -68,12 +68,12 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
             endTime: "",
             color: "#3498db",
           })}>
-            <span>{format(day,"d")}</span>
+            <span className="day-number">{format(day,"d")}</span>
             {eventsForDay.slice(0,2).map((event, idx) => (
               <Event key={idx} event={event}/>
             ))}
             {eventsForDay.length > 2 && (
-              <button onClick={(e) =>{
+              <button className="overflow-button" onClick={(e) =>{
                 e.stopPropagation();
                 openOverflowModal(day);
               }}>

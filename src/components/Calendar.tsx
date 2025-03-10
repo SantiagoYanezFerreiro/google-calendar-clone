@@ -64,7 +64,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
           const eventsForDay = events.filter(
             (event) =>
               format(new Date(event.startTime), "yyyy-MM-dd") ===
-              format(day, "yyyy-mm-dd")
+              format(day, "yyyy-MM-dd")
           );
           return (
             <div

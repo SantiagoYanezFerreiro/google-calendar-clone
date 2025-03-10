@@ -12,8 +12,8 @@ const Event: React.FC<EventProps> = ({ event }) => {
     <div className="event">
       <p className="event-name">{event.name}</p>
       <p className="event-time">
-        {format(new Date(event.startTime), "HH-mm")} -{" "}
-        {format(new Date(event.endTime), "HH-mm")}
+        {format(new Date(event.startTime), "HH:mm")} -{" "}
+        {format(new Date(event.endTime), "HH:mm")}
       </p>
     </div>
   );

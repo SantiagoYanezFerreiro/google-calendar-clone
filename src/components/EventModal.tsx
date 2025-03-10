@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {format} from "date-fns";
 import {EventType} from "../types/eventTypes";
+import "./styles.css";
 
 interface EventModalProps {
   event: EventType | null;

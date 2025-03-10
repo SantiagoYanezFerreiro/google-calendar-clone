@@ -1,6 +1,7 @@
 import React from "react";
 import {format} from "date-fns";
 import { EventType } from "../types/eventTypes";
+import "./styles.css";
 
 interface OverflowModalProps{
     selectedDay: Date,

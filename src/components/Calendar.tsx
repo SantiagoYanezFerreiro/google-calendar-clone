@@ -12,6 +12,7 @@ import {
 import { EventType } from "../types/eventTypes.ts";
 import Event from "./Event";
 import OverflowModal from "./OverflowModal.tsx";
+import "./styles.css";
 
 interface CalendarProps {
   events: EventType[];

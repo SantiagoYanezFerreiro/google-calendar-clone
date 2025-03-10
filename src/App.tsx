@@ -3,7 +3,7 @@ import Calendar from "./components/Calendar.tsx";
 import EventModal from "./components/EventModal";
 import { EventType } from "./types/eventTypes";
 import "./App.css";
-import "index.css";
+import "./styles.css";
 
 const App: React.FC = () => {
   const [events, setEvents] = useState<EventType[]>([

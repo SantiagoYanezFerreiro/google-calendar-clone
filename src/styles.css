@@ -44,6 +44,14 @@ h3 {
   cursor: pointer;
 }
 
+.calendar-day.past-date {
+  opacity: 0.5;
+}
+
+.calendar-day.outside-month {
+  background-color: #ccc;
+}
+
 .day-number {
   font-weight: bold;
 }

@@ -49,13 +49,14 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   return (
     <div className="calendar-container">
       <header className="calendar-header">
+        <button onClick={() => setCurrentMonth(new Date())}>Today</button>
         <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
           Previous
         </button>
-        <h2>{format(currentMonth, "MMMM yyyy")}</h2>
         <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
           Next
         </button>
+        <h2>{format(currentMonth, "MMMM yyyy")}</h2>
       </header>
 
       <div className="calendar-grid">

@@ -12,6 +12,7 @@ const Event: React.FC<EventProps> = ({ event, onClick }) => {
   return (
     <div
       className="event"
+      style={{ backgroundColor: event.color }}
       onClick={(e) => {
         e.stopPropagation();
         onClick(event);

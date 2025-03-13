@@ -82,7 +82,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
             >
               <span className="day-number">{format(day, "d")}</span>
               {eventsForDay.slice(0, 2).map((event, idx) => (
-                <Event key={idx} event={event} />
+                <Event key={idx} event={event} onClick={onEventClick} />
               ))}
               {eventsForDay.length > 2 && (
                 <button

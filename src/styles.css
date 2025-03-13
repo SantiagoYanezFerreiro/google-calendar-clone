@@ -37,7 +37,8 @@ h3 {
   background-color: #fff;
   padding: 1px;
   border: 1px solid #ddd;
-  min-height: 50px;
+  min-height: 100px;
+  min-width: 100px;
   cursor: pointer;
 }
 

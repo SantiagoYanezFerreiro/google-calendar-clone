@@ -29,7 +29,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const savedEvents = localStorage.getItem("events");
     if (savedEvents) {
-      setEvents(localStorage.parse(savedEvents));
+      setEvents(JSON.parse(savedEvents));
     }
   }, []);
 

@@ -13,6 +13,7 @@ import { EventType } from "../types/eventTypes.ts";
 import Event from "./Event";
 import OverflowModal from "./OverflowModal.tsx";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { MdOutlineEventAvailable } from "react-icons/md";
 import "../styles.css";
 
 interface CalendarProps {
@@ -91,6 +92,9 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
               {eventsForDay.slice(0, 2).map((event, idx) => (
                 <Event key={idx} event={event} onClick={onEventClick} />
               ))}
+              <button className="add-event-button">
+                <MdOutlineEventAvailable />
+              </button>
               {eventsForDay.length > 2 && (
                 <button
                   className="overflow-button"

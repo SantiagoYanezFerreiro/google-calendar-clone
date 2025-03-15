@@ -4,7 +4,7 @@ import { EventType } from "../types/eventTypes";
 import "../styles.css";
 
 interface EventModalProps {
-  event: EventType | null;
+  event: (EventType & { allDay?: boolean }) | null;
   onClose: () => void;
   onSave: (event: EventType) => void;
   onDelete: (id: number) => void;
@@ -13,8 +13,8 @@ interface EventModalProps {
 const EventModal: React.FC<EventModalProps> = ({
   event,
   onClose,
-  onDelete,
   onSave,
+  onDelete,
 }) => {
   const [eventData, setEventData] = useState<EventType>({
     id: event?.id || Date.now(),
@@ -22,6 +22,7 @@ const EventModal: React.FC<EventModalProps> = ({
     startTime: event?.startTime || format(new Date(), "yyyy-MM-dd'T'HH:mm"),
     endTime: event?.endTime || format(new Date(), "yyyy-MM-dd'T'HH:mm"),
     color: event?.color || "#3498db",
+    allDay: event?.allDay || false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +46,7 @@ const EventModal: React.FC<EventModalProps> = ({
         name="name"
         value={eventData.name}
         onChange={handleChange}
+        required
       />
 
       <label>Start Time</label>
@@ -53,6 +55,7 @@ const EventModal: React.FC<EventModalProps> = ({
         name="startTime"
         value={eventData.startTime}
         onChange={handleChange}
+        required={!eventData.allDay}
       />
 
       <label>End Time</label>

@@ -12,6 +12,7 @@ import {
 import { EventType } from "../types/eventTypes.ts";
 import Event from "./Event";
 import OverflowModal from "./OverflowModal.tsx";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../styles.css";
 
 interface CalendarProps {
@@ -51,10 +52,10 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
       <header className="calendar-header">
         <button onClick={() => setCurrentMonth(new Date())}>Today</button>
         <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
-          Previous
+          <FaChevronLeft />
         </button>
         <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
-          Next
+          <FaChevronRight />
         </button>
         <h2>{format(currentMonth, "MMMM yyyy")}</h2>
       </header>

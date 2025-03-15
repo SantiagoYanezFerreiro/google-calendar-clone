@@ -28,6 +28,10 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   const [showOverFlowModal, setShowOverflowModal] = useState(false);
 
   useEffect(() => {
+    localStorage.setItem("events", JSON.stringify(events));
+  }, [events]);
+
+  useEffect(() => {
     generateCalendarDays();
   }, [currentMonth]);
 
@@ -47,6 +51,14 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
     setSelectedDay(day);
     setShowOverflowModal(true);
   };
+
+  const sortedEvents = events.sort((a, b) =>
+    a.allDay === b.allDay
+      ? a.startTime.localeCompare(b.startTime)
+      : a.allDay
+      ? -1
+      : 1
+  );
 
   return (
     <div className="calendar-container">
@@ -89,7 +101,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
               }
             >
               <span className="day-number">{format(day, "d")}</span>
-              {eventsForDay.slice(0, 2).map((event, idx) => (
+              {sortedEvents.slice(0, 2).map((event, idx) => (
                 <Event key={idx} event={event} onClick={onEventClick} />
               ))}
               <button className="add-event-button">

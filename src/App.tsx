@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "./components/Calendar.tsx";
 import EventModal from "./components/EventModal";
 import { EventType } from "./types/eventTypes";
@@ -26,6 +26,13 @@ const App: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    const savedEvents = localStorage.getItem("events");
+    if (savedEvents) {
+      setEvents(localStorage.parse(savedEvents));
+    }
+  }, []);
+
   // Save a new event or update an existing event handleSaveEvent
   const handleSaveEvent = (event: EventType) => {
     setEvents((prevEvents) => {
@@ -42,13 +49,13 @@ const App: React.FC = () => {
     setEvents(events.filter((event) => event.id !== id));
     setIsModalOpen(false);
   };
-  
+
   // When an event is clicked in the Calendar, open the modal for editing handleEventClick
   const handleEventClick = (event: EventType) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
   };
-  
+
   return (
     <div className="app-container">
       <h1>Google Calendar Clone</h1>

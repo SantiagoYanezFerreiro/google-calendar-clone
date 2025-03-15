@@ -60,7 +60,9 @@ const EventModal: React.FC<EventModalProps> = ({
   return (
     <div className="modal" role="dialog" aria-modal="true">
       <h3>{event ? "Edit Event" : "Create Event"}</h3>
-      <label>Event Name:</label>
+      <label htmlFor="eventName">
+        Event Name<span>*</span>
+      </label>
       <input
         type="text"
         name="name"

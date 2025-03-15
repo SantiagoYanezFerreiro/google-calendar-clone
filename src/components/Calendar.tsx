@@ -52,14 +52,6 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
     setShowOverflowModal(true);
   };
 
-  const sortedEvents = events.sort((a, b) =>
-    a.allDay === b.allDay
-      ? a.startTime.localeCompare(b.startTime)
-      : a.allDay
-      ? -1
-      : 1
-  );
-
   return (
     <div className="calendar-container">
       <header className="calendar-header">
@@ -81,11 +73,19 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
           const dayClass = `calendar-day ${
             !isCurrentMonth ? "outside-month" : ""
           } ${isPastDate ? "past-date" : ""}`;
-          const eventsForDay = events.filter(
-            (event) =>
-              format(new Date(event.startTime), "yyyy-MM-dd") ===
-              format(day, "yyyy-MM-dd")
-          );
+          const eventsForDay = events
+            .filter(
+              (event) =>
+                format(new Date(event.startTime), "yyyy-MM-dd") ===
+                format(day, "yyyy-MM-dd")
+            )
+            .sort((a, b) =>
+              a.allDay === b.allDay
+                ? a.startTime.localeCompare(b.startTime)
+                : a.allDay
+                ? -1
+                : 1
+            );
           return (
             <div
               key={index}
@@ -101,7 +101,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
               }
             >
               <span className="day-number">{format(day, "d")}</span>
-              {sortedEvents.slice(0, 2).map((event, idx) => (
+              {eventsForDay.slice(0, 2).map((event, idx) => (
                 <Event key={idx} event={event} onClick={onEventClick} />
               ))}
               <button className="add-event-button">

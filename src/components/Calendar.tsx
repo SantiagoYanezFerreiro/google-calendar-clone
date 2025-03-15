@@ -73,6 +73,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
           const dayClass = `calendar-day ${
             !isCurrentMonth ? "outside-month" : ""
           } ${isPastDate ? "past-date" : ""}`;
+
           const eventsForDay = events
             .filter(
               (event) =>
@@ -87,24 +88,23 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                 : 1
             );
           return (
-            <div
-              key={index}
-              className={dayClass}
-              onClick={() =>
-                onEventClick({
-                  id: Date.now(),
-                  name: "",
-                  startTime: "",
-                  endTime: "",
-                  color: "#3498db",
-                })
-              }
-            >
+            <div key={index} className={dayClass}>
               <span className="day-number">{format(day, "d")}</span>
               {eventsForDay.slice(0, 2).map((event, idx) => (
                 <Event key={idx} event={event} onClick={onEventClick} />
               ))}
-              <button className="add-event-button">
+              <button
+                className="add-event-button"
+                onClick={() =>
+                  onEventClick({
+                    id: Date.now(),
+                    name: "",
+                    startTime: format(day, "yyyy-MM-dd"),
+                    endTime: format(day, "yyyy-MM-dd"),
+                    color: "#3498db",
+                  })
+                }
+              >
                 <MdOutlineEventAvailable />
               </button>
               {eventsForDay.length > 2 && (

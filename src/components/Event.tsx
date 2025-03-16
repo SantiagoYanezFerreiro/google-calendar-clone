@@ -25,6 +25,11 @@ const Event: React.FC<EventProps> = ({ event, onClick }) => {
         e.stopPropagation();
         onClick(event);
       }}
+      onKeyPress={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onClick(event);
+        }
+      }}
     >
       <p className="event-name-time">
         {event.name}

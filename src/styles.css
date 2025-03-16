@@ -108,23 +108,67 @@ button.delete:hover {
 }
 
 .modal {
-  transition: opacity 0.3 ease;
-  opacity: 1;
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
   position: fixed;
-  top: 60%;
-  bottom: 20%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.modal h3 {
-  color: #555; /* Modal Date Header Text */
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  max-width: 90%;
 }
 
 .modal-closing {
   opacity: 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  margin-top: 10px;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal input[type="text"],
+.modal input[type="datetime-local"],
+.modal select {
+  width: 100%;
+  margin-bottom: 0.8rem;
+  padding: 0.4rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.modal-closing {
+  opacity: 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .error {
@@ -138,6 +182,7 @@ button.delete:hover {
   border: 0.8px solid #ccc;
   border-radius: 4px;
   color: white;
+  overflow: hidden;
 }
 
 .event p {

@@ -131,6 +131,17 @@ button.delete:hover {
   max-width: 90%;
 }
 
+.modal-content label {
+  color: black;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.modal-content input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .modal-closing {
   opacity: 0;
 }
@@ -147,8 +158,8 @@ button.delete:hover {
 
 .modal-footer {
   display: flex;
-  align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .modal input[type="text"],
@@ -171,6 +182,10 @@ button.delete:hover {
   align-items: center;
 }
 
+.all-day-container {
+  margin-bottom: 10px;
+}
+
 .error {
   color: red;
   margin-top: 10px;
@@ -183,6 +198,7 @@ button.delete:hover {
   border-radius: 4px;
   color: white;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .event p {
@@ -192,6 +208,14 @@ button.delete:hover {
 
 .event-time {
   margin-left: 5px;
+}
+
+.event-name-time {
+  background-color: hsl(0, 75%, 60%); /* Red Event */
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .event.red {

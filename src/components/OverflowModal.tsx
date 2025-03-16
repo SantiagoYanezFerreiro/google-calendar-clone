@@ -32,9 +32,13 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
 
   return (
     <div className={`modal ${isClosing ? "modal-closing" : ""}`}>
-      <div className="modal-content"></div>
-      <div className="modal-header">
-        <h3>Events on {selectedDay.toDateString()}</h3>
+      <div className="modal-content">
+        <div className="modal-header">
+          <h3>Events on {format(selectedDay, "MMMM d, yyyy")}</h3>
+          <button onClick={handleClose} className="close-button">
+            &times;
+          </button>
+        </div>
         <div className="modal-body">
           {eventsForDay.map((event, index) => (
             <div
@@ -49,12 +53,21 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
               }}
               aria-label={`Edit Event ${event.name}`}
             >
-              <p>
-                {event.name} - {format(new Date(event.startTime), "HH:mm")}
+              <p className="event-name-time">
+                <span className="event-name">{event.name}:</span>
+                {"  "}
+                <span className="event-time">
+                  {format(new Date(event.startTime), "HH:mm")} -{" "}
+                  {format(new Date(event.endTime), "HH:mm")}
+                </span>
               </p>
             </div>
           ))}
-          <button onClick={handleClose}>Close</button>
+        </div>
+        <div className="modal-footer">
+          <button onClick={handleClose} className="close-button">
+            Close
+          </button>
         </div>
       </div>
     </div>

@@ -133,86 +133,95 @@ const EventModal: React.FC<EventModalProps> = ({
     >
       <div className="modal-content">
         <div className="modal-header">
-          <h3>{event ? "Edit Event" : "Create Event"}</h3>
-          <div className="modal-body">
-            <label htmlFor="eventName">
-              Event Name<span>*</span>
+          <h3>{event ? "Edit Event" : "Add Event"}</h3>
+          <button
+            onClick={handleClose}
+            className="close-button"
+            aria-label="Close Modal"
+          >
+            &times;
+          </button>
+        </div>
+        <div className="modal-body">
+          <label htmlFor="eventName">
+            Event Name<span>*</span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={eventData.name}
+            onChange={handleChange}
+            required
+          />
+
+          <div className="all-day-container">
+            <label>
+              <input
+                type="checkbox"
+                name="allDay"
+                checked={eventData.allDay}
+                onChange={handleAllDayChange}
+              />
+              All Day:
             </label>
-            <input
-              type="text"
-              name="name"
-              value={eventData.name}
-              onChange={handleChange}
-              required
-            />
+          </div>
 
-            <label>All Day:</label>
-            <input
-              type="checkbox"
-              name="allDay"
-              checked={eventData.allDay}
-              onChange={handleAllDayChange}
-            />
+          <label htmlFor="startTime">Start Time</label>
+          <input
+            type="datetime-local"
+            name="startTime"
+            value={eventData.startTime}
+            onChange={handleChange}
+            disabled={eventData.allDay}
+            required={!eventData.allDay}
+          />
 
-            <label>Start Time</label>
-            <input
-              type="datetime-local"
-              name="startTime"
-              value={eventData.startTime}
-              onChange={handleChange}
-              disabled={eventData.allDay}
-              required={!eventData.allDay}
-            />
+          <label htmlFor="endTime">End Time</label>
+          <input
+            type="datetime-local"
+            name="endTime"
+            value={eventData.endTime}
+            onChange={handleChange}
+            disabled={eventData.allDay}
+            required={!eventData.allDay}
+          />
 
-            <label>End Time</label>
-            <input
-              type="datetime-local"
-              name="endTime"
-              value={eventData.endTime}
-              onChange={handleChange}
-              disabled={eventData.allDay}
-              required={!eventData.allDay}
-            />
-
-            <label>Color:</label>
-            <select
-              name="color"
-              value={eventData.color}
-              onChange={handleChange}
+          <label htmlFor="color">Color:</label>
+          <select name="color" value={eventData.color} onChange={handleChange}>
+            <option
+              value="hsl(0, 75%, 60%)"
+              style={{ color: "hsl(0, 75%, 60%)" }}
             >
-              <option
-                value="hsl(0, 75%, 60%)"
-                style={{ color: "hsl(0, 75%, 60%)" }}
-              >
-                Red
-              </option>
-              <option
-                value="hsl(200, 80%, 50%)"
-                style={{ color: "hsl(200, 80%, 50%)" }}
-              >
-                Blue
-              </option>
-              <option
-                value="hsl(150, 80%, 30%)"
-                style={{ color: "hsl(150, 80%, 30%)" }}
-              >
-                Green
-              </option>
-            </select>
+              Red
+            </option>
+            <option
+              value="hsl(200, 80%, 50%)"
+              style={{ color: "hsl(200, 80%, 50%)" }}
+            >
+              Blue
+            </option>
+            <option
+              value="hsl(150, 80%, 30%)"
+              style={{ color: "hsl(150, 80%, 30%)" }}
+            >
+              Green
+            </option>
+          </select>
 
-            {error && <p className="error">{error}</p>}
+          {error && <p className="error">{error}</p>}
 
-            <div className="modal-footer">
-              <button onClick={handleSave}>Save</button>
-              <button
-                onClick={handleClose}
-                className="close-button"
-                aria-label="Close Modal"
-              >
-                Cancel
+          <div className="modal-footer">
+            <button onClick={handleSave} className="save">
+              {event ? "Save" : "Add"}
+            </button>
+            {event && (
+              <button onClick={handleDelete} className="delete">
+                Delete
               </button>
-              {event && <button onClick={handleDelete}>Delete</button>}
-            </div>
+            )}
+            <button onClick={handleClose} className="close-button">
+              Cancel
+            </button>
           </div>
         </div>
       </div>

@@ -55,14 +55,21 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   return (
     <div className="calendar-container">
       <header className="calendar-header">
-        <button onClick={() => setCurrentMonth(new Date())}>Today</button>
+        <button
+          className="calendar-header-today"
+          onClick={() => setCurrentMonth(new Date())}
+        >
+          Today
+        </button>
         <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
           <FaChevronLeft />
         </button>
         <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
           <FaChevronRight />
         </button>
-        <h2>{format(currentMonth, "MMMM yyyy")}</h2>
+        <h2 className="calendar-header-month">
+          {format(currentMonth, "MMMM yyyy")}
+        </h2>
       </header>
 
       <div className="calendar-grid">
@@ -101,8 +108,8 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                   onEventClick({
                     id: Date.now(),
                     name: "",
-                    startTime: format(day, "yyyy-MM-dd"),
-                    endTime: format(day, "yyyy-MM-dd"),
+                    startTime: `${format(day, "yyyy-MM-dd")}T09:00`,
+                    endTime: `${format(day, "yyyy-MM-dd")}T12:00`,
                     color: "#3498db",
                   })
                 }

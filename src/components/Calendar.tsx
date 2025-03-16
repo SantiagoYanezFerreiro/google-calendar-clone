@@ -28,7 +28,10 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   const [showOverFlowModal, setShowOverflowModal] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("events", JSON.stringify(events));
+    const timer = setTimeout(() => {
+      localStorage.setItem("events", JSON.stringify(events));
+    }, 500); // 500ms debounce delay
+    return () => clearTimeout(timer);
   }, [events]);
 
   useEffect(() => {

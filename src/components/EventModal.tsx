@@ -81,20 +81,24 @@ const EventModal: React.FC<EventModalProps> = ({
   };
 
   const handleSave = () => {
+    let valid = true;
+    setError("");
+
     if (!eventData.name.trim()) {
       setError("Event name is required");
-      return;
+      valid = false;
     }
     if (!eventData.allDay) {
       if (!eventData.startTime || !eventData.endTime) {
-        setError("Start time and End Time are required");
-        return;
+        setError((prev) => prev + "Start time and End Time are required");
+        valid = false;
       }
       if (new Date(eventData.startTime) > new Date(eventData.endTime)) {
-        setError("Start time must be before end time");
-        return;
+        setError((prev) => prev + "Start time must be before end time");
+        valid = false;
       }
     }
+    if (!valid) return;
     onSave(eventData);
   };
 
@@ -111,7 +115,7 @@ const EventModal: React.FC<EventModalProps> = ({
 
   return (
     <div
-      className={`modal ${isClosing}? "closing": ""`}
+      className={`modal ${isClosing ? "closing" : ""}`}
       role="dialog"
       aria-modal="true"
     >

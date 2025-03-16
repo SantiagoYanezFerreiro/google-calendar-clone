@@ -27,21 +27,24 @@ const EventModal: React.FC<EventModalProps> = ({
     name: event?.name || "",
     startTime: event?.startTime
       ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(9), // Default to 9:00 AM
+      : getDefaultEventTime(9),
     endTime: event?.endTime
       ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(12), // Default to 12:00 PM
-    color: event?.color || "#3498db",
+      : getDefaultEventTime(12),
+    color: event?.color || "blue",
     allDay: event?.allDay ?? false,
   });
+
+  const [isClosing, setIsClosing] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!event) {
       setEventData({
         id: Date.now(),
         name: "",
-        startTime: getDefaultEventTime(9), // Default to 9:00 AM
-        endTime: getDefaultEventTime(12), // Default to 12:00 PM
+        startTime: getDefaultEventTime(9),
+        endTime: getDefaultEventTime(12),
         color: "#3498db",
         allDay: false,
       });
@@ -51,10 +54,10 @@ const EventModal: React.FC<EventModalProps> = ({
         name: event.name || "",
         startTime: event.startTime
           ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(9), // Default to 9:00 AM
+          : getDefaultEventTime(9),
         endTime: event.endTime
           ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(12), // Default to 12:00 PM
+          : getDefaultEventTime(12),
         color: event.color || "#3498db",
         allDay: event.allDay || false,
       });
@@ -79,16 +82,16 @@ const EventModal: React.FC<EventModalProps> = ({
 
   const handleSave = () => {
     if (!eventData.name.trim()) {
-      alert("Event name is required");
+      setError("Event name is required");
       return;
     }
     if (!eventData.allDay) {
       if (!eventData.startTime || !eventData.endTime) {
-        alert("Start time and End Time are required");
+        setError("Start time and End Time are required");
         return;
       }
       if (new Date(eventData.startTime) > new Date(eventData.endTime)) {
-        alert("Start time must be before end time");
+        setError("Start time must be before end time");
         return;
       }
     }
@@ -99,8 +102,19 @@ const EventModal: React.FC<EventModalProps> = ({
     onDelete(eventData.id);
   };
 
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
   return (
-    <div className="modal" role="dialog" aria-modal="true">
+    <div
+      className={`modal ${isClosing}? "closing": ""`}
+      role="dialog"
+      aria-modal="true"
+    >
       <h3>{event ? "Edit Event" : "Create Event"}</h3>
       <label htmlFor="eventName">
         Event Name<span>*</span>
@@ -147,6 +161,8 @@ const EventModal: React.FC<EventModalProps> = ({
         <option value="hsl(200, 80%, 50%)">Blue</option>
         <option value="hsl(150, 80%, 30%)">Green</option>
       </select>
+
+      {error && <p className="error">{error}</p>}
 
       <button onClick={handleSave}>Save</button>
       <button onClick={onClose}>Cancel</button>

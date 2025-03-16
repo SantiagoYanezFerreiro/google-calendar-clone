@@ -110,7 +110,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                     name: "",
                     startTime: `${format(day, "yyyy-MM-dd")}T09:00`,
                     endTime: `${format(day, "yyyy-MM-dd")}T12:00`,
-                    color: "#3498db",
+                    color: "blue",
                   })
                 }
               >
@@ -124,7 +124,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                     openOverflowModal(day);
                   }}
                 >
-                  +More
+                  +{eventsForDay.length - 2} More
                 </button>
               )}
             </div>

@@ -58,7 +58,6 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container">
-      <h1>Google Calendar Clone</h1>
       <Calendar events={events} onEventClick={handleEventClick} />
       {isModalOpen && (
         <EventModal

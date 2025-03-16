@@ -11,15 +11,13 @@ h3 {
   color: #333;
 }
 
-.app-container {
-  width: 100%;
-  height: 100vh;
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
 .calendar-container {
-  margin-top: 20px;
+  width: 100%;
+  max-width: 1500px;
+  height: 100vh; /* full screen height */
+  margin: 0 auto; /* center it */
+  display: flex;
+  flex-direction: column;
 }
 
 .calendar-header {
@@ -44,11 +42,11 @@ h3 {
   cursor: pointer;
 }
 
-.calendar-day.past-date {
+.past-date {
   opacity: 0.5;
 }
 
-.calendar-day.outside-month {
+.outside-month {
   background-color: #ccc;
 }
 

@@ -45,7 +45,7 @@ const EventModal: React.FC<EventModalProps> = ({
         alert("Start time and End Time are required");
         return;
       }
-      if (new Date(eventData.startTime) < new Date(eventData.endTime)) {
+      if (new Date(eventData.startTime) > new Date(eventData.endTime)) {
         alert("Start time must be before end time");
         return;
       }

@@ -68,7 +68,9 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
       <div className="calendar-grid">
         {days.map((day, index) => {
           //Filter events for specific day
-          const isPastDate = day < new Date();
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const isPastDate = day < today;
           const isCurrentMonth = day.getMonth() === currentMonth.getMonth();
           const dayClass = `calendar-day ${
             !isCurrentMonth ? "outside-month" : ""

@@ -27,10 +27,10 @@ const EventModal: React.FC<EventModalProps> = ({
     name: event?.name || "",
     startTime: event?.startTime
       ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(9),
+      : getDefaultEventTime(9), // Default to 9:00 AM
     endTime: event?.endTime
       ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(10),
+      : getDefaultEventTime(12), // Default to 12:00 PM
     color: event?.color || "#3498db",
     allDay: event?.allDay ?? false,
   });
@@ -40,8 +40,8 @@ const EventModal: React.FC<EventModalProps> = ({
       setEventData({
         id: Date.now(),
         name: "",
-        startTime: getDefaultEventTime(9),
-        endTime: getDefaultEventTime(10),
+        startTime: getDefaultEventTime(9), // Default to 9:00 AM
+        endTime: getDefaultEventTime(12), // Default to 12:00 PM
         color: "#3498db",
         allDay: false,
       });
@@ -51,10 +51,10 @@ const EventModal: React.FC<EventModalProps> = ({
         name: event.name || "",
         startTime: event.startTime
           ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(9),
+          : getDefaultEventTime(9), // Default to 9:00 AM
         endTime: event.endTime
           ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(10),
+          : getDefaultEventTime(12), // Default to 12:00 PM
         color: event.color || "#3498db",
         allDay: event.allDay || false,
       });
@@ -143,9 +143,9 @@ const EventModal: React.FC<EventModalProps> = ({
 
       <label>Color:</label>
       <select name="color" value={eventData.color} onChange={handleChange}>
-        <option value="red">Red</option>
-        <option value="blue">Blue</option>
-        <option value="green">Green</option>
+        <option value="hsl(0, 75%, 60%)">Red</option>
+        <option value="hsl(200, 80%, 50%)">Blue</option>
+        <option value="hsl(150, 80%, 30%)">Green</option>
       </select>
 
       <button onClick={handleSave}>Save</button>

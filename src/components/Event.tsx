@@ -9,10 +9,16 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = ({ event, onClick }) => {
+  const eventClass =
+    event.color === "red"
+      ? "event red"
+      : event.color === "blue"
+      ? "event blue"
+      : "event green";
+
   return (
     <div
-      className="event"
-      style={{ backgroundColor: event.color }}
+      className={eventClass}
       onClick={(e) => {
         e.stopPropagation();
         onClick(event);

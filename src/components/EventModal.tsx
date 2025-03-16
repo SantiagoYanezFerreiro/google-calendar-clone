@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { format } from "date-fns";
+import React, { useState, useEffect } from "react";
 import { EventType } from "../types/eventTypes";
 import "../styles.css";
+import { format } from "date-fns";
 
 interface EventModalProps {
   event: (EventType & { allDay?: boolean }) | null;
@@ -17,23 +17,60 @@ const EventModal: React.FC<EventModalProps> = ({
   onDelete,
 }) => {
   const getDefaultEventTime = (hours: number, minutes: number = 0) => {
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return format(date, "yyyy-MM-dd'T'HH:mm");
+    const now = new Date();
+    now.setHours(hours, minutes, 0, 0);
+    return format(now, "yyyy-MM-dd'T'HH:mm");
   };
-  const [eventData, setEventData] = useState<EventType>({
+
+  const [eventData, setEventData] = useState<EventType & { allDay?: boolean }>({
     id: event?.id || Date.now(),
     name: event?.name || "",
-    startTime: event?.startTime || format(new Date(), getDefaultEventTime(9)),
-    endTime: event?.endTime || format(new Date(), getDefaultEventTime(10)),
+    startTime: event?.startTime
+      ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
+      : getDefaultEventTime(9),
+    endTime: event?.endTime
+      ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
+      : getDefaultEventTime(10),
     color: event?.color || "#3498db",
-    allDay: event?.allDay || false,
+    allDay: event?.allDay ?? false,
   });
+
+  useEffect(() => {
+    if (!event) {
+      setEventData({
+        id: Date.now(),
+        name: "",
+        startTime: getDefaultEventTime(9),
+        endTime: getDefaultEventTime(10),
+        color: "#3498db",
+        allDay: false,
+      });
+    } else {
+      setEventData({
+        id: event.id,
+        name: event.name || "",
+        startTime: event.startTime
+          ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
+          : getDefaultEventTime(9),
+        endTime: event.endTime
+          ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
+          : getDefaultEventTime(10),
+        color: event.color || "#3498db",
+        allDay: event.allDay || false,
+      });
+    }
+  }, [event]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setEventData({ ...eventData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "startTime" || name === "endTime") {
+      setEventData({ ...eventData, [name]: value }); // Keep it in the correct format
+    } else {
+      setEventData({ ...eventData, [name]: value });
+    }
   };
 
   const handleAllDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {

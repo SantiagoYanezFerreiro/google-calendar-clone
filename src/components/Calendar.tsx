@@ -108,25 +108,32 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
             );
           return (
             <div key={index} className={dayClass}>
+              {index < 7 && (
+                <div className="day-abbr">
+                  {format(day, "EEE").toUpperCase()}
+                </div>
+              )}
               <span className="day-number">{format(day, "d")}</span>
               {eventsForDay.slice(0, 2).map((event, idx) => (
                 <Event key={idx} event={event} onClick={onEventClick} />
               ))}
-              <button
-                className="add-event-button"
-                aria-label="Add event"
-                onClick={() =>
-                  onEventClick({
-                    id: Date.now(),
-                    name: "",
-                    startTime: `${format(day, "yyyy-MM-dd")}T09:00`,
-                    endTime: `${format(day, "yyyy-MM-dd")}T12:00`,
-                    color: "hsl(200, 80%, 50%)",
-                  })
-                }
-              >
-                <MdOutlineEventAvailable />
-              </button>
+              <div className="add-event-container">
+                <button
+                  className="add-event-button"
+                  aria-label="Add event"
+                  onClick={() =>
+                    onEventClick({
+                      id: Date.now(),
+                      name: "",
+                      startTime: `${format(day, "yyyy-MM-dd")}T09:00`,
+                      endTime: `${format(day, "yyyy-MM-dd")}T12:00`,
+                      color: "hsl(200, 80%, 50%)",
+                    })
+                  }
+                >
+                  <MdOutlineEventAvailable />
+                </button>
+              </div>
               {eventsForDay.length > 2 && (
                 <button
                   className="overflow-button"

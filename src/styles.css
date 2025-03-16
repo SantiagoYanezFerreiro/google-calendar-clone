@@ -11,6 +11,41 @@ h3 {
   color: #333; /* Default Text */
 }
 
+label {
+  color: #777; /* Modal Form Label Text */
+}
+
+button {
+  border: 1px solid #dadce0; /* Button Border */
+  background-color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f1f3f4; /* Button Hover Background */
+}
+
+button.save {
+  border: 1px solid hsl(150, 80%, 30%); /* Save/Add Button Border */
+  background-color: hsl(150, 80%, 95%); /* Save/Add Button Background */
+  color: hsl(150, 80%, 10%); /* Save/Add Button Text */
+}
+
+button.save:hover {
+  background-color: hsl(150, 80%, 90%); /* Save/Add Button Hover Background */
+}
+
+button.delete {
+  border: 1px solid hsl(0, 75%, 60%); /* Delete Button Border */
+  background-color: hsl(0, 75%, 95%); /* Delete Button Background */
+  color: hsl(0, 75%, 10%); /* Delete Button Text */
+}
+
+button.delete:hover {
+  background-color: hsl(0, 75%, 90%); /* Delete Button Hover Background */
+}
+
 .calendar-container {
   width: 100%;
   max-width: 1500px;
@@ -55,6 +90,14 @@ h3 {
   font-weight: bold;
 }
 
+.day-abbr {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px; /* Adjust spacing as needed */
+  text-align: center;
+}
+
 .overflow-button {
   margin-top: 5px;
   padding: 10px;
@@ -76,11 +119,15 @@ h3 {
   z-index: 1000;
 }
 
+.modal h3 {
+  color: #555; /* Modal Date Header Text */
+}
+
 .modal-closing {
   opacity: 0;
 }
 
-error {
+.error {
   color: red;
   margin-top: 10px;
 }
@@ -98,6 +145,10 @@ error {
   margin: 1px;
 }
 
+.event-time {
+  margin-left: 5px;
+}
+
 .event.red {
   background-color: hsl(0, 75%, 60%); /* Red Event */
 }
@@ -110,46 +161,12 @@ error {
   background-color: hsl(150, 80%, 30%); /* Green Event */
 }
 
-button {
-  border: 1px solid #dadce0; /* Button Border */
-  background-color: #fff;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #f1f3f4; /* Button Hover Background */
-}
-
-button.save {
-  border: 1px solid hsl(150, 80%, 30%); /* Save/Add Button Border */
-  background-color: hsl(150, 80%, 95%); /* Save/Add Button Background */
-  color: hsl(150, 80%, 10%); /* Save/Add Button Text */
-}
-
-button.save:hover {
-  background-color: hsl(150, 80%, 90%); /* Save/Add Button Hover Background */
-}
-
-button.delete {
-  border: 1px solid hsl(0, 75%, 60%); /* Delete Button Border */
-  background-color: hsl(0, 75%, 95%); /* Delete Button Background */
-  color: hsl(0, 75%, 10%); /* Delete Button Text */
-}
-
-button.delete:hover {
-  background-color: hsl(0, 75%, 90%); /* Delete Button Hover Background */
+.add-event-container {
+  display: block;
+  margin-top: 4px; /* Adjust spacing as needed */
 }
 
 .today {
   background-color: hsl(200, 80%, 50%); /* Today's Day Text Background */
   color: white; /* Today's Day Text */
-}
-
-label {
-  color: #777; /* Modal Form Label Text */
-}
-
-.modal h3 {
-  color: #555; /* Modal Date Header Text */
 }

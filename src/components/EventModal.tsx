@@ -16,11 +16,16 @@ const EventModal: React.FC<EventModalProps> = ({
   onSave,
   onDelete,
 }) => {
+  const getDefaultEventTime = (hours: number, minutes: number = 0) => {
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return format(date, "yyyy-MM-dd'T'HH:mm");
+  };
   const [eventData, setEventData] = useState<EventType>({
     id: event?.id || Date.now(),
     name: event?.name || "",
-    startTime: event?.startTime || format(new Date(), "yyyy-MM-dd'T'HH:mm"),
-    endTime: event?.endTime || format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+    startTime: event?.startTime || format(new Date(), getDefaultEventTime(9)),
+    endTime: event?.endTime || format(new Date(), getDefaultEventTime(10)),
     color: event?.color || "#3498db",
     allDay: event?.allDay || false,
   });

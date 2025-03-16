@@ -45,7 +45,7 @@ const EventModal: React.FC<EventModalProps> = ({
         name: "",
         startTime: getDefaultEventTime(9),
         endTime: getDefaultEventTime(12),
-        color: "#3498db",
+        color: "hsl(200, 80%, 50%)",
         allDay: false,
       });
     } else {

@@ -157,15 +157,27 @@ const EventModal: React.FC<EventModalProps> = ({
 
       <label>Color:</label>
       <select name="color" value={eventData.color} onChange={handleChange}>
-        <option value="hsl(0, 75%, 60%)">Red</option>
-        <option value="hsl(200, 80%, 50%)">Blue</option>
-        <option value="hsl(150, 80%, 30%)">Green</option>
+        <option value="hsl(0, 75%, 60%)" style={{ color: "hsl(0, 75%, 60%)" }}>
+          Red
+        </option>
+        <option
+          value="hsl(200, 80%, 50%)"
+          style={{ color: "hsl(200, 80%, 50%)" }}
+        >
+          Blue
+        </option>
+        <option
+          value="hsl(150, 80%, 30%)"
+          style={{ color: "hsl(150, 80%, 30%)" }}
+        >
+          Green
+        </option>
       </select>
 
       {error && <p className="error">{error}</p>}
 
       <button onClick={handleSave}>Save</button>
-      <button onClick={onClose}>Cancel</button>
+      <button onClick={handleClose}>Cancel</button>
       {event && <button onClick={handleDelete}>Delete</button>}
     </div>
   );

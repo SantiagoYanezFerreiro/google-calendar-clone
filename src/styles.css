@@ -65,6 +65,8 @@ h3 {
 }
 
 .modal {
+  transition: opacity 0.3 ease;
+  opacity: 1;
   background: #fff;
   padding: 20px;
   border: 1px solid #ccc;
@@ -72,6 +74,15 @@ h3 {
   top: 60%;
   bottom: 20%;
   z-index: 1000;
+}
+
+.modal-closing {
+  opacity: 0;
+}
+
+error {
+  color: red;
+  margin-top: 10px;
 }
 
 .event {

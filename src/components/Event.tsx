@@ -19,6 +19,8 @@ const Event: React.FC<EventProps> = ({ event, onClick }) => {
   return (
     <div
       className={eventClass}
+      role="button"
+      tabIndex={0}
       onClick={(e) => {
         e.stopPropagation();
         onClick(event);

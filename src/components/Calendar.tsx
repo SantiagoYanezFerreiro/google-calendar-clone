@@ -58,13 +58,20 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
         <button
           className="calendar-header-today"
           onClick={() => setCurrentMonth(new Date())}
+          aria-label="Go to today"
         >
           Today
         </button>
-        <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
+        <button
+          onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+          aria-label="Previous month"
+        >
           <FaChevronLeft />
         </button>
-        <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
+        <button
+          onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+          aria-label="Next month"
+        >
           <FaChevronRight />
         </button>
         <h2 className="calendar-header-month">
@@ -104,6 +111,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
               ))}
               <button
                 className="add-event-button"
+                aria-label="Add event"
                 onClick={() =>
                   onEventClick({
                     id: Date.now(),
@@ -123,6 +131,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                     e.stopPropagation();
                     openOverflowModal(day);
                   }}
+                  aria-label={`Show ${eventsForDay.length - 2} more events`}
                 >
                   +{eventsForDay.length - 2} More
                 </button>

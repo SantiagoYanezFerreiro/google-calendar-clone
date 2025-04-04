@@ -21,11 +21,14 @@ interface CalendarProps {
   onEventClick: (event: EventType) => void;
 }
 
+const MAX_VISIBLE_EVENTS = 2; // Maximum number of events visible in a day cell
+
 const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [days, setDays] = useState<Date[]>([]);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
-  const [showOverFlowModal, setShowOverflowModal] = useState(false);
+  const [overflowEvents, setOverflowEvents] = useState<EventType[]>([]);
+  const [showOverflowModal, setShowOverflowModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,9 +53,26 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
     setDays(tempDays);
   };
 
-  const openOverflowModal = (day: Date) => {
+  const openOverflowModal = (day: Date, overflowEvents: EventType[]) => {
     setSelectedDay(day);
+    setOverflowEvents(overflowEvents);
     setShowOverflowModal(true);
+  };
+
+  const getEventsForDay = (day: Date) => {
+    return events
+      .filter(
+        (event) =>
+          format(new Date(event.startTime), "yyyy-MM-dd") ===
+          format(day, "yyyy-MM-dd")
+      )
+      .sort((a, b) =>
+        a.allDay === b.allDay
+          ? a.startTime.localeCompare(b.startTime)
+          : a.allDay
+          ? -1
+          : 1
+      );
   };
 
   return (
@@ -84,7 +104,6 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
 
       <div className="calendar-grid">
         {days.map((day, index) => {
-          //Filter events for specific day
           const today = new Date();
           today.setHours(0, 0, 0, 0);
           const isPastDate = day < today;
@@ -93,19 +112,10 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
             !isCurrentMonth ? "outside-month" : ""
           } ${isPastDate ? "past-date" : ""}`;
 
-          const eventsForDay = events
-            .filter(
-              (event) =>
-                format(new Date(event.startTime), "yyyy-MM-dd") ===
-                format(day, "yyyy-MM-dd")
-            )
-            .sort((a, b) =>
-              a.allDay === b.allDay
-                ? a.startTime.localeCompare(b.startTime)
-                : a.allDay
-                ? -1
-                : 1
-            );
+          const eventsForDay = getEventsForDay(day);
+          const visibleEvents = eventsForDay.slice(0, MAX_VISIBLE_EVENTS);
+          const overflowEvents = eventsForDay.slice(MAX_VISIBLE_EVENTS);
+
           return (
             <div key={index} className={dayClass}>
               {index < 7 && (
@@ -114,9 +124,21 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                 </div>
               )}
               <span className="day-number">{format(day, "d")}</span>
-              {eventsForDay.slice(0, 2).map((event, idx) => (
+              {visibleEvents.map((event, idx) => (
                 <Event key={idx} event={event} onClick={onEventClick} />
               ))}
+              {overflowEvents.length > 0 && (
+                <button
+                  className="overflow-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openOverflowModal(day, overflowEvents);
+                  }}
+                  aria-label={`Show ${overflowEvents.length} more events`}
+                >
+                  +{overflowEvents.length} More
+                </button>
+              )}
               <div className="add-event-container">
                 <button
                   className="add-event-button"
@@ -134,26 +156,14 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                   <MdOutlineEventAvailable />
                 </button>
               </div>
-              {eventsForDay.length > 2 && (
-                <button
-                  className="overflow-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openOverflowModal(day);
-                  }}
-                  aria-label={`Show ${eventsForDay.length - 2} more events`}
-                >
-                  +{eventsForDay.length - 2} More
-                </button>
-              )}
             </div>
           );
         })}
       </div>
-      {showOverFlowModal && selectedDay && (
+      {showOverflowModal && selectedDay && (
         <OverflowModal
           selectedDay={selectedDay}
-          events={events}
+          events={overflowEvents}
           closeModal={() => setShowOverflowModal(false)}
           onEventClick={onEventClick}
         />

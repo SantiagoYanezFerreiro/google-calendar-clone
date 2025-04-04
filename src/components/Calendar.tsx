@@ -114,7 +114,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
 
           const eventsForDay = getEventsForDay(day);
           const visibleEvents = eventsForDay.slice(0, MAX_VISIBLE_EVENTS);
-          const overflowEvents = eventsForDay.slice(MAX_VISIBLE_EVENTS);
+          const dayOverflowEvents = eventsForDay.slice(MAX_VISIBLE_EVENTS);
 
           return (
             <div key={index} className={dayClass}>
@@ -124,15 +124,19 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                 </div>
               )}
               <span className="day-number">{format(day, "d")}</span>
-              {visibleEvents.map((event, idx) => (
-                <Event key={idx} event={event} onClick={onEventClick} />
-              ))}
+              {eventsForDay && eventsForDay.length > 0 ? (
+                visibleEvents.map((event) => (
+                  <Event key={event.id} event={event} onClick={onEventClick} />
+                ))
+              ) : (
+                <p>No Events</p>
+              )}
               {overflowEvents.length > 0 && (
                 <button
                   className="overflow-button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    openOverflowModal(day, overflowEvents);
+                    openOverflowModal(day, dayOverflowEvents);
                   }}
                   aria-label={`Show ${overflowEvents.length} more events`}
                 >

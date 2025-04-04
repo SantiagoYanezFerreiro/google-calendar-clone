@@ -124,25 +124,24 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
                 </div>
               )}
               <span className="day-number">{format(day, "d")}</span>
-              {eventsForDay && eventsForDay.length > 0 ? (
+
+              {visibleEvents.length > 0 &&
                 visibleEvents.map((event) => (
                   <Event key={event.id} event={event} onClick={onEventClick} />
-                ))
-              ) : (
-                <p>No Events</p>
-              )}
-              {overflowEvents.length > 0 && (
+                ))}
+              {dayOverflowEvents.length > 0 && (
                 <button
                   className="overflow-button"
                   onClick={(e) => {
                     e.stopPropagation();
                     openOverflowModal(day, dayOverflowEvents);
                   }}
-                  aria-label={`Show ${overflowEvents.length} more events`}
+                  aria-label={`Show ${dayOverflowEvents.length} more events`}
                 >
-                  +{overflowEvents.length} More
+                  +{dayOverflowEvents.length} More
                 </button>
               )}
+
               <div className="add-event-container">
                 <button
                   className="add-event-button"
@@ -164,6 +163,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
           );
         })}
       </div>
+
       {showOverflowModal && selectedDay && (
         <OverflowModal
           selectedDay={selectedDay}

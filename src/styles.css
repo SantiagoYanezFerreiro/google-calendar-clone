@@ -182,6 +182,10 @@ button.delete:hover {
   align-items: center;
 }
 
+.overflow-event {
+  background-color: red;
+}
+
 .all-day-container {
   margin-bottom: 10px;
 }

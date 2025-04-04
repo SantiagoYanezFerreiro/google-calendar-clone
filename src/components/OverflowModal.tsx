@@ -31,7 +31,7 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
   };
 
   return (
-    <div className={`modal ${isClosing ? "modal-closing" : ""}`}>
+    <div className={`modal  ${isClosing ? "modal-closing" : ""}`}>
       <div className="modal-content">
         <div className="modal-header">
           <h3>Events on {format(selectedDay, "MMMM d, yyyy")}</h3>
@@ -39,9 +39,10 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
             &times;
           </button>
         </div>
-        <div className="modal-body">
+        <div className="modal-body modal-body-overflow">
           {eventsForDay.map((event, index) => (
             <div
+              className="overflow-event"
               key={index}
               onClick={() => onEventClick(event)}
               role="button"

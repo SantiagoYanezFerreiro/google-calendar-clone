@@ -211,7 +211,6 @@ button.delete:hover {
 }
 
 .event-name-time {
-  background-color: hsl(0, 75%, 60%); /* Red Event */
   padding: 10px;
   color: white;
   font-weight: bold;

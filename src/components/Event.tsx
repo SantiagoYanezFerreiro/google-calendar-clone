@@ -19,6 +19,7 @@ const Event: React.FC<EventProps> = ({ event, onClick }) => {
   return (
     <div
       className={eventClass}
+      style={{ backgroundColor: event.color }}
       role="button"
       tabIndex={0}
       onClick={(e) => {

@@ -111,7 +111,11 @@ const EventModal: React.FC<EventModalProps> = ({
       }
     }
     if (!valid) return;
-    onSave(eventData);
+
+    onSave({
+      ...eventData,
+      color: eventData.color || "hsl(200, 80%, 50%)", // Default to blue if no color is selected
+    });
   };
 
   const handleDelete = () => {

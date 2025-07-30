@@ -23,6 +23,7 @@ const App: React.FC = () => {
     },
   ]);
   // Modal state for creating/editing events
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -58,7 +59,12 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container">
-      <Calendar events={events} onEventClick={handleEventClick} />
+      <Calendar
+        events={events}
+        onEventClick={handleEventClick}
+        selectedDate={selectedDate}
+        onDateSelect={setSelectedDate}
+      />
       {isModalOpen && (
         <EventModal
           event={selectedEvent}

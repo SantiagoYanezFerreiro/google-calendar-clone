@@ -54,6 +54,7 @@ button.delete:hover {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  position: relative;
 }
 
 .calendar-grid {
@@ -63,6 +64,8 @@ button.delete:hover {
   margin-top: 10px;
   min-height: 0;
   flex: 1;
+  overflow-y: auto;
+  background: #ddd;
 }
 
 .calendar-day {

@@ -15,5 +15,20 @@ export const CalendarHeader = memo(
     onTodayClick,
     onPreviousMonth,
     onNextMonth,
-  }: CalendarHeaderProps) => {}
+  }: CalendarHeaderProps) => {
+    return (
+      <div className="calendar-header">
+        <h2>{format(currentMonth, "MMMM yyyy")}</h2>
+        <div className="calendar-controls">
+          <button onClick={onTodayClick}>Today</button>
+          <button onClick={onPreviousMonth} aria-label="Previous Month">
+            <FaChevronLeft />
+          </button>
+          <button onClick={onNextMonth} aria-label="Next Month">
+            <FaChevronRight />
+          </button>
+        </div>
+      </div>
+    );
+  }
 );

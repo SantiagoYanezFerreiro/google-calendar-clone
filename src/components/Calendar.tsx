@@ -11,6 +11,7 @@ import {
 } from "date-fns";
 import { EventType } from "../types/eventTypes.ts";
 import Event from "./Event";
+import Day from "./Day";
 import OverflowModal from "./OverflowModal.tsx";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineEventAvailable } from "react-icons/md";
@@ -19,9 +20,8 @@ import "../styles.css";
 interface CalendarProps {
   events: EventType[];
   onEventClick: (event: EventType) => void;
+  selectedDate?: Date;
 }
-
-const MAX_VISIBLE_EVENTS = 2; // Maximum number of events visible in a day cell
 
 const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -29,6 +29,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [overflowEvents, setOverflowEvents] = useState<EventType[]>([]);
   const [showOverflowModal, setShowOverflowModal] = useState(false);
+  const [maxVisibleEvents, setMaxVisibleEvents] = useState(2);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,6 +76,28 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
       );
   };
 
+  useEffect(() => {
+    const calculateVisibleEvents = () => {
+      const dayEl = document.querySelector(".calendar-day");
+      if (dayEl) {
+        const dayHeight = dayEl.clientHeight;
+        const headerHeight = 30;
+        const eventHeight = 22;
+        const availableHeight = dayHeight - headerHeight;
+        const visibleCount = Math.floor(availableHeight / eventHeight);
+        setMaxVisibleEvents(Math.max(visibleCount, 1));
+      }
+    };
+
+    const observer = new ResizeObserver(calculateVisibleEvents);
+    const container = document.querySelector(".calendar-container");
+    if (container) {
+      observer.observe(container);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="calendar-container">
       <header className="calendar-header">
@@ -108,58 +131,22 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
           today.setHours(0, 0, 0, 0);
           const isPastDate = day < today;
           const isCurrentMonth = day.getMonth() === currentMonth.getMonth();
-          const dayClass = `calendar-day ${
-            !isCurrentMonth ? "outside-month" : ""
-          } ${isPastDate ? "past-date" : ""}`;
-
           const eventsForDay = getEventsForDay(day);
-          const visibleEvents = eventsForDay.slice(0, MAX_VISIBLE_EVENTS);
-          const dayOverflowEvents = eventsForDay.slice(MAX_VISIBLE_EVENTS);
 
           return (
-            <div key={index} className={dayClass}>
-              {index < 7 && (
-                <div className="day-abbr">
-                  {format(day, "EEE").toUpperCase()}
-                </div>
-              )}
-              <span className="day-number">{format(day, "d")}</span>
-
-              {visibleEvents.length > 0 &&
-                visibleEvents.map((event) => (
-                  <Event key={event.id} event={event} onClick={onEventClick} />
-                ))}
-              {dayOverflowEvents.length > 0 && (
-                <button
-                  className="overflow-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openOverflowModal(day, dayOverflowEvents);
-                  }}
-                  aria-label={`Show ${dayOverflowEvents.length} more events`}
-                >
-                  +{dayOverflowEvents.length} More
-                </button>
-              )}
-
-              <div className="add-event-container">
-                <button
-                  className="add-event-button"
-                  aria-label="Add event"
-                  onClick={() =>
-                    onEventClick({
-                      id: Date.now(),
-                      name: "",
-                      startTime: `${format(day, "yyyy-MM-dd")}T09:00`,
-                      endTime: `${format(day, "yyyy-MM-dd")}T12:00`,
-                      color: "hsl(200, 80%, 50%)",
-                    })
-                  }
-                >
-                  <MdOutlineEventAvailable />
-                </button>
-              </div>
-            </div>
+            <Day
+              key={index}
+              day={day}
+              events={eventsForDay}
+              isCurrentMonth={isCurrentMonth}
+              isPastDate={isPastDate}
+              isSelected={false}
+              maxVisibleEvents={maxVisibleEvents}
+              onEventClick={onEventClick}
+              onDateSelect={(date) => setSelectedDay(date)}
+              onMoreClick={openOverflowModal}
+              showDayName={index < 7}
+            />
           );
         })}
       </div>
@@ -175,5 +162,4 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
     </div>
   );
 };
-
 export default Calendar;

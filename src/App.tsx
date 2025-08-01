@@ -57,13 +57,19 @@ const App: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+    setSelectedEvent(null);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="app-container">
       <Calendar
         events={events}
         onEventClick={handleEventClick}
         selectedDate={selectedDate}
-        onDateSelect={setSelectedDate}
+        onDateSelect={handleDateSelect}
       />
       {isModalOpen && (
         <EventModal

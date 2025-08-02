@@ -70,15 +70,16 @@ export const Day = memo(
           <button
             className="add-event-button"
             aria-label="Add event"
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation();
               onEventClick({
                 id: Date.now(),
                 name: "",
                 startTime: `${format(day, "yyyy-MM-dd")}T09:00`,
                 endTime: `${format(day, "yyyy-MM-dd")}T12:00`,
                 color: "hsl(200, 80%, 50%)",
-              })
-            }
+              });
+            }}
           >
             <MdOutlineEventAvailable />
           </button>

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { format } from "date-fns";
 import Event from "./Event";
 import { EventType } from "../types/eventTypes";

@@ -23,7 +23,11 @@ interface CalendarProps {
   selectedDate?: Date;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  events,
+  onEventClick,
+  selectedDate,
+}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [days, setDays] = useState<Date[]>([]);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
@@ -140,7 +144,12 @@ const Calendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
               events={eventsForDay}
               isCurrentMonth={isCurrentMonth}
               isPastDate={isPastDate}
-              isSelected={false}
+              isSelected={
+                selectedDate
+                  ? format(day, "yyyy-MM-dd") ===
+                    format(selectedDate, "yyyy-MM-dd")
+                  : false
+              }
               maxVisibleEvents={maxVisibleEvents}
               onEventClick={onEventClick}
               onDateSelect={(date) => setSelectedDay(date)}

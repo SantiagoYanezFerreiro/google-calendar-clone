@@ -10,11 +10,9 @@ import {
   format,
 } from "date-fns";
 import { EventType } from "../types/eventTypes.ts";
-import Event from "./Event";
 import Day from "./Day";
 import OverflowModal from "./OverflowModal.tsx";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { MdOutlineEventAvailable } from "react-icons/md";
 import "../styles.css";
 
 interface CalendarProps {

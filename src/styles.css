@@ -54,6 +54,7 @@ button.delete:hover {
   flex-direction: column;
   position: relative;
   background: white;
+  overflow: hidden;
 }
 
 .calendar-grid {
@@ -64,6 +65,7 @@ button.delete:hover {
   overflow-y: auto;
   background: #ddd;
   min-height: 0; /* Important for Firefox */
+  padding: 1px;
 }
 
 .calendar-day {

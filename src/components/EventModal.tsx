@@ -129,6 +129,10 @@ const EventModal: React.FC<EventModalProps> = ({
     }, 300);
   };
 
+  const formatDisplayTime = (time: string) => {
+    return format(new Date(time), "hh:mm a");
+  };
+
   return (
     <div
       className={`modal ${isClosing ? "modal-closing" : ""}`}
@@ -150,6 +154,12 @@ const EventModal: React.FC<EventModalProps> = ({
           <label htmlFor="eventName">
             Event Name<span>*</span>
           </label>
+          {event && (
+            <span className="event-time">
+              {formatDisplayTime(event.startTime)} -{" "}
+              {formatDisplayTime(event.endTime)}
+            </span>
+          )}
           <input
             type="text"
             name="name"

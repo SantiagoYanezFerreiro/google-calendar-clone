@@ -21,12 +21,14 @@ interface CalendarProps {
   events: EventType[];
   onEventClick: (event: EventType) => void;
   selectedDate?: Date;
+  onDateSelect: (date: Date) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({
   events,
   onEventClick,
   selectedDate,
+  onDateSelect,
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [days, setDays] = useState<Date[]>([]);
@@ -152,7 +154,7 @@ const Calendar: React.FC<CalendarProps> = ({
               }
               maxVisibleEvents={maxVisibleEvents}
               onEventClick={onEventClick}
-              onDateSelect={(date) => setSelectedDay(date)}
+              onDateSelect={onDateSelect}
               onMoreClick={openOverflowModal}
               showDayName={index < 7}
             />

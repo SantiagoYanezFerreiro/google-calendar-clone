@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { EventType } from "../types/eventTypes";
 import "../styles.css";
 import { format } from "date-fns";
@@ -16,6 +16,7 @@ const EventModal: React.FC<EventModalProps> = ({
   onSave,
   onDelete,
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
   const getDefaultEventTime = (hours: number, minutes: number = 0) => {
     const now = new Date();
     now.setHours(hours, minutes, 0, 0);
@@ -79,6 +80,10 @@ const EventModal: React.FC<EventModalProps> = ({
   }, [event]);
 
   useEffect(() => {
+    const firstInput = modalRef.current?.querySelector("input") as HTMLElement;
+    if (firstInput) {
+      firstInput.focus();
+    }
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         handleClose();
@@ -100,10 +105,6 @@ const EventModal: React.FC<EventModalProps> = ({
     } else {
       setEventData({ ...eventData, [name]: value });
     }
-  };
-
-  const handleAllDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventData({ ...eventData, allDay: e.target.checked });
   };
 
   const handleSave = () => {
@@ -149,6 +150,7 @@ const EventModal: React.FC<EventModalProps> = ({
 
   return (
     <div
+      ref={modalRef}
       className={`modal ${isClosing ? "modal-closing" : ""}`}
       role="dialog"
       aria-modal="true"
@@ -186,7 +188,6 @@ const EventModal: React.FC<EventModalProps> = ({
             <label>
               <input
                 type="checkbox"
-                name="allDay"
                 checked={eventData.allDay}
                 onChange={handleAllDayChange}
               />

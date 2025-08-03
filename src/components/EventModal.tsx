@@ -22,6 +22,20 @@ const EventModal: React.FC<EventModalProps> = ({
     return format(now, "yyyy-MM-dd'T'HH:mm");
   };
 
+  const handleAllDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isAllDay = e.target.checked;
+    setEventData((prev) => ({
+      ...prev,
+      allDay: isAllDay,
+      startTime: isAllDay
+        ? format(new Date(prev.startTime), "yyyy-MM-dd") + "T00:00"
+        : prev.startTime,
+      endTime: isAllDay
+        ? format(new Date(prev.endTime), "yyyy-MM-dd") + "T23:59"
+        : prev.endTime,
+    }));
+  };
+
   const [eventData, setEventData] = useState<EventType & { allDay?: boolean }>({
     id: event?.id || Date.now(),
     name: event?.name || "",

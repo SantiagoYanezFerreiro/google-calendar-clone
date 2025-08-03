@@ -17,24 +17,14 @@ const EventModal: React.FC<EventModalProps> = ({
   onDelete,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [error, setError] = useState("");
+
   const getDefaultEventTime = (hours: number, minutes: number = 0) => {
     const now = new Date();
     now.setHours(hours, minutes, 0, 0);
     return format(now, "yyyy-MM-dd'T'HH:mm");
-  };
-
-  const handleAllDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isAllDay = e.target.checked;
-    setEventData((prev) => ({
-      ...prev,
-      allDay: isAllDay,
-      startTime: isAllDay
-        ? format(new Date(prev.startTime), "yyyy-MM-dd") + "T00:00"
-        : prev.startTime,
-      endTime: isAllDay
-        ? format(new Date(prev.endTime), "yyyy-MM-dd") + "T23:59"
-        : prev.endTime,
-    }));
   };
 
   const [eventData, setEventData] = useState<EventType & { allDay?: boolean }>({
@@ -46,13 +36,11 @@ const EventModal: React.FC<EventModalProps> = ({
     endTime: event?.endTime
       ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
       : getDefaultEventTime(12),
-    color: event?.color || "blue",
+    color: event?.color || "hsl(200, 80%, 50%)",
     allDay: event?.allDay ?? false,
   });
 
-  const [isClosing, setIsClosing] = useState(false);
-  const [error, setError] = useState("");
-
+  // Initialize event data
   useEffect(() => {
     if (!event) {
       setEventData({
@@ -73,64 +61,123 @@ const EventModal: React.FC<EventModalProps> = ({
         endTime: event.endTime
           ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
           : getDefaultEventTime(12),
-        color: event.color || "#3498db",
+        color: event.color || "hsl(200, 80%, 50%)",
         allDay: event.allDay || false,
       });
     }
   }, [event]);
 
+  // Focus management
   useEffect(() => {
     const firstInput = modalRef.current?.querySelector("input") as HTMLElement;
     if (firstInput) {
       firstInput.focus();
     }
+  }, []);
+
+  // Keyboard event handlers
+  useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         handleClose();
       }
     };
+
     window.addEventListener("keydown", handleEsc);
-    return () => {
-      window.removeEventListener("keydown", handleEsc);
-    };
+    return () => window.removeEventListener("keydown", handleEsc);
   }, []);
+
+  // Focus trap
+  useEffect(() => {
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key === "Tab") {
+        const focusableElements =
+          modalRef.current?.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          ) ?? [];
+
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0] as HTMLElement;
+        const lastElement = focusableElements[
+          focusableElements.length - 1
+        ] as HTMLElement;
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleTabKey);
+    return () => window.removeEventListener("keydown", handleTabKey);
+  }, []);
+
+  const handleAllDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isAllDay = e.target.checked;
+    const date = new Date(eventData.startTime);
+
+    setEventData((prev) => ({
+      ...prev,
+      allDay: isAllDay,
+      startTime: isAllDay
+        ? format(date, "yyyy-MM-dd") + "T00:00"
+        : format(date, "yyyy-MM-dd'T'HH:mm"),
+      endTime: isAllDay
+        ? format(date, "yyyy-MM-dd") + "T23:59"
+        : format(new Date(prev.endTime), "yyyy-MM-dd'T'HH:mm"),
+    }));
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
-    if (name === "startTime" || name === "endTime") {
-      setEventData({ ...eventData, [name]: value }); // Keep it in the correct format
-    } else {
-      setEventData({ ...eventData, [name]: value });
-    }
+    setEventData({ ...eventData, [name]: value });
   };
 
-  const handleSave = () => {
-    let valid = true;
-    setError("");
+  const handleSave = async () => {
+    try {
+      setIsLoading(true);
+      let valid = true;
+      const errors: string[] = [];
 
-    if (!eventData.name.trim()) {
-      setError("Event name is required");
-      valid = false;
-    }
-    if (!eventData.allDay) {
-      if (!eventData.startTime || !eventData.endTime) {
-        setError((prev) => prev + "Start time and End Time are required");
+      if (!eventData.name.trim()) {
+        errors.push("Event name is required");
         valid = false;
       }
-      if (new Date(eventData.startTime) > new Date(eventData.endTime)) {
-        setError((prev) => prev + "Start time must be before end time");
-        valid = false;
-      }
-    }
-    if (!valid) return;
 
-    onSave({
-      ...eventData,
-      color: eventData.color || "hsl(200, 80%, 50%)", // Default to blue if no color is selected
-    });
+      if (!eventData.allDay) {
+        if (!eventData.startTime || !eventData.endTime) {
+          errors.push("Start time and End Time are required");
+          valid = false;
+        }
+        if (new Date(eventData.startTime) > new Date(eventData.endTime)) {
+          errors.push("Start time must be before end time");
+          valid = false;
+        }
+      }
+
+      setError(errors.join(". "));
+      if (!valid) return;
+
+      await onSave({
+        ...eventData,
+        color: eventData.color || "hsl(200, 80%, 50%)",
+      });
+    } catch (err: unknown) {
+      // Type the error properly
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to save event";
+      setError(errorMessage);
+      console.error("Save error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = () => {
@@ -145,7 +192,13 @@ const EventModal: React.FC<EventModalProps> = ({
   };
 
   const formatDisplayTime = (time: string) => {
-    return format(new Date(time), "hh:mm a");
+    try {
+      return format(new Date(time), "hh:mm a").toUpperCase();
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      console.error("Invalid date:", time, errorMessage);
+      return "Invalid time";
+    }
   };
 
   return (
@@ -178,6 +231,7 @@ const EventModal: React.FC<EventModalProps> = ({
           )}
           <input
             type="text"
+            id="eventName"
             name="name"
             value={eventData.name}
             onChange={handleChange}
@@ -191,13 +245,14 @@ const EventModal: React.FC<EventModalProps> = ({
                 checked={eventData.allDay}
                 onChange={handleAllDayChange}
               />
-              All Day:
+              All Day
             </label>
           </div>
 
           <label htmlFor="startTime">Start Time</label>
           <input
             type="datetime-local"
+            id="startTime"
             name="startTime"
             value={eventData.startTime}
             onChange={handleChange}
@@ -208,6 +263,7 @@ const EventModal: React.FC<EventModalProps> = ({
           <label htmlFor="endTime">End Time</label>
           <input
             type="datetime-local"
+            id="endTime"
             name="endTime"
             value={eventData.endTime}
             onChange={handleChange}
@@ -216,39 +272,33 @@ const EventModal: React.FC<EventModalProps> = ({
           />
 
           <label htmlFor="color">Color:</label>
-          <select name="color" value={eventData.color} onChange={handleChange}>
-            <option
-              value="hsl(0, 75%, 60%)"
-              style={{ color: "hsl(0, 75%, 60%)" }}
-            >
-              Red
-            </option>
-            <option
-              value="hsl(200, 80%, 50%)"
-              style={{ color: "hsl(200, 80%, 50%)" }}
-            >
-              Blue
-            </option>
-            <option
-              value="hsl(150, 80%, 30%)"
-              style={{ color: "hsl(150, 80%, 30%)" }}
-            >
-              Green
-            </option>
+          <select
+            id="color"
+            name="color"
+            value={eventData.color}
+            onChange={handleChange}
+          >
+            <option value="hsl(0, 75%, 60%)">Red</option>
+            <option value="hsl(200, 80%, 50%)">Blue</option>
+            <option value="hsl(150, 80%, 30%)">Green</option>
           </select>
 
-          {error && <p className="error">{error}</p>}
+          {error && (
+            <p className="error" role="alert">
+              {error}
+            </p>
+          )}
 
           <div className="modal-footer">
-            <button onClick={handleSave} className="save">
-              {event ? "Save" : "Add"}
+            <button onClick={handleSave} className="save" disabled={isLoading}>
+              {isLoading ? "Saving..." : event ? "Save" : "Add"}
             </button>
             {event && (
               <button onClick={handleDelete} className="delete">
                 Delete
               </button>
             )}
-            <button onClick={handleClose} className="close-button">
+            <button onClick={handleClose} className="close">
               Cancel
             </button>
           </div>

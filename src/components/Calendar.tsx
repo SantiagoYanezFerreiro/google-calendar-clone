@@ -86,8 +86,9 @@ const Calendar: React.FC<CalendarProps> = ({
       if (dayEl) {
         const dayHeight = dayEl.clientHeight;
         const headerHeight = 30;
+        const addButtonHeight = 24;
         const eventHeight = 22;
-        const availableHeight = dayHeight - headerHeight;
+        const availableHeight = dayHeight - headerHeight - addButtonHeight;
         const visibleCount = Math.floor(availableHeight / eventHeight);
         setMaxVisibleEvents(Math.max(visibleCount, 1));
       }

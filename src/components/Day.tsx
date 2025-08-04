@@ -32,7 +32,7 @@ export const Day = memo(
   }: DayProps) => {
     const dayClass = `calendar-day ${!isCurrentMonth ? "outside-month" : ""}
       ${isPastDate ? "past-date" : ""}
-    } ${isSelected ? "selected-date" : ""}
+     ${isSelected ? "selected-date" : ""}
      ${
        format(day, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")
          ? "today"

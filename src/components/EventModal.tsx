@@ -6,7 +6,7 @@ import { format } from "date-fns";
 interface EventModalProps {
   event: (EventType & { allDay?: boolean }) | null;
   onClose: () => void;
-  onSave: (event: EventType) => void;
+  onSave: (event: EventType) => Promise<void>;
   onDelete: (id: number) => void;
 }
 
@@ -35,19 +35,18 @@ const EventModal: React.FC<EventModalProps> = ({
       : getDefaultEventTime(9),
     endTime: event?.endTime
       ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(12),
+      : getDefaultEventTime(10),
     color: event?.color || "hsl(200, 80%, 50%)",
     allDay: event?.allDay ?? false,
   });
 
-  // Initialize event data
   useEffect(() => {
     if (!event) {
       setEventData({
         id: Date.now(),
         name: "",
         startTime: getDefaultEventTime(9),
-        endTime: getDefaultEventTime(12),
+        endTime: getDefaultEventTime(10),
         color: "hsl(200, 80%, 50%)",
         allDay: false,
       });
@@ -60,22 +59,27 @@ const EventModal: React.FC<EventModalProps> = ({
           : getDefaultEventTime(9),
         endTime: event.endTime
           ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(12),
+          : getDefaultEventTime(10),
         color: event.color || "hsl(200, 80%, 50%)",
         allDay: event.allDay || false,
       });
     }
   }, [event]);
 
-  // Focus management
   useEffect(() => {
-    const firstInput = modalRef.current?.querySelector("input") as HTMLElement;
-    if (firstInput) {
+    const firstInput = modalRef.current?.querySelector('input[name="name"]');
+    if (firstInput instanceof HTMLElement) {
       firstInput.focus();
     }
+
+    const previousFocus = document.activeElement;
+    return () => {
+      if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
+    };
   }, []);
 
-  // Keyboard event handlers
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -87,7 +91,6 @@ const EventModal: React.FC<EventModalProps> = ({
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  // Focus trap
   useEffect(() => {
     const handleTabKey = (e: KeyboardEvent) => {
       if (e.key === "Tab") {
@@ -130,6 +133,7 @@ const EventModal: React.FC<EventModalProps> = ({
       endTime: isAllDay
         ? format(date, "yyyy-MM-dd") + "T23:59"
         : format(new Date(prev.endTime), "yyyy-MM-dd'T'HH:mm"),
+      displayTime: isAllDay ? format(date, "MMM d, yyyy") : undefined,
     }));
   };
 
@@ -137,7 +141,7 @@ const EventModal: React.FC<EventModalProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setEventData({ ...eventData, [name]: value });
+    setEventData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSave = async () => {
@@ -163,14 +167,17 @@ const EventModal: React.FC<EventModalProps> = ({
       }
 
       setError(errors.join(". "));
-      if (!valid) return;
+      if (!valid) {
+        setIsLoading(false);
+        return;
+      }
 
       await onSave({
         ...eventData,
         color: eventData.color || "hsl(200, 80%, 50%)",
       });
+      onClose();
     } catch (err: unknown) {
-      // Type the error properly
       const errorMessage =
         err instanceof Error ? err.message : "Failed to save event";
       setError(errorMessage);
@@ -182,18 +189,20 @@ const EventModal: React.FC<EventModalProps> = ({
 
   const handleDelete = () => {
     onDelete(eventData.id);
+    onClose();
   };
 
   const handleClose = () => {
     setIsClosing(true);
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       onClose();
     }, 300);
+    return () => clearTimeout(timeout);
   };
 
   const formatDisplayTime = (time: string) => {
     try {
-      return format(new Date(time), "hh:mm a").toUpperCase();
+      return format(new Date(time), "h:mm a").toUpperCase();
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       console.error("Invalid date:", time, errorMessage);
@@ -208,10 +217,17 @@ const EventModal: React.FC<EventModalProps> = ({
       role="dialog"
       aria-modal="true"
     >
-      <div className="modal-content">
+      <form
+        className="modal-content"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSave();
+        }}
+      >
         <div className="modal-header">
           <h3>{event ? "Edit Event" : "Add Event"}</h3>
           <button
+            type="button"
             onClick={handleClose}
             className="close-button"
             aria-label="Close Modal"
@@ -225,8 +241,11 @@ const EventModal: React.FC<EventModalProps> = ({
           </label>
           {event && (
             <span className="event-time">
-              {formatDisplayTime(event.startTime)} -{" "}
-              {formatDisplayTime(event.endTime)}
+              {eventData.allDay
+                ? format(new Date(event.startTime), "MMM d, yyyy")
+                : `${formatDisplayTime(event.startTime)} - ${formatDisplayTime(
+                    event.endTime
+                  )}`}
             </span>
           )}
           <input
@@ -290,20 +309,20 @@ const EventModal: React.FC<EventModalProps> = ({
           )}
 
           <div className="modal-footer">
-            <button onClick={handleSave} className="save" disabled={isLoading}>
+            <button type="submit" className="save" disabled={isLoading}>
               {isLoading ? "Saving..." : event ? "Save" : "Add"}
             </button>
             {event && (
-              <button onClick={handleDelete} className="delete">
+              <button type="button" onClick={handleDelete} className="delete">
                 Delete
               </button>
             )}
-            <button onClick={handleClose} className="close">
+            <button type="button" onClick={handleClose} className="close">
               Cancel
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

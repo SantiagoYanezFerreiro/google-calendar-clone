@@ -48,7 +48,7 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
-                if (e.key === "Enter" || e.key === "") {
+                if (e.key === "Enter" || e.key === " ") {
                   onEventClick(event);
                 }
               }}
@@ -58,8 +58,12 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
                 <span className="event-name">{event.name}:</span>
                 {"  "}
                 <span className="event-time">
-                  {format(new Date(event.startTime), "HH:mm")} -{" "}
-                  {format(new Date(event.endTime), "HH:mm")}
+                  {event.allDay
+                    ? "All Day"
+                    : `${format(
+                        new Date(event.startTime),
+                        "h:mm a"
+                      )} - ${format(new Date(event.endTime), "h:mm a")}`}
                 </span>
               </p>
             </div>

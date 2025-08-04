@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Calendar from "./components/Calendar.tsx";
+import Calendar from "./components/Calendar";
 import EventModal from "./components/EventModal";
 import { EventType } from "./types/eventTypes";
 import "./App.css";
@@ -35,19 +35,25 @@ const App: React.FC = () => {
   }, []);
 
   // Save a new event or update an existing event handleSaveEvent
-  const handleSaveEvent = (event: EventType) => {
+  const handleSaveEvent = async (event: EventType) => {
     setEvents((prevEvents) => {
-      const eventsExists = prevEvents.some((e) => e.id === event.id);
-      return eventsExists
+      const eventExists = prevEvents.some((e) => e.id === event.id);
+      const updatedEvents = eventExists
         ? prevEvents.map((e) => (e.id === event.id ? event : e))
         : [...prevEvents, { ...event, id: Date.now() }];
+
+      // Save to localStorage
+      localStorage.setItem("events", JSON.stringify(updatedEvents));
+      return updatedEvents;
     });
     setIsModalOpen(false);
   };
 
   // Delete an event by id handleDeleteEvent
   const handleDeleteEvent = (id: number) => {
-    setEvents(events.filter((event) => event.id !== id));
+    const updatedEvents = events.filter((event) => event.id !== id);
+    setEvents(updatedEvents);
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
     setIsModalOpen(false);
   };
 

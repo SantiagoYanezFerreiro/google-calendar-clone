@@ -4,24 +4,37 @@ import EventModal from "./components/EventModal";
 import { EventType } from "./types/eventTypes";
 import "./App.css";
 import "./styles.css";
-
 const App: React.FC = () => {
-  const [events, setEvents] = useState<EventType[]>([
-    {
-      id: 1,
-      name: "Meeting",
-      startTime: "2025-03-15T10:00",
-      endTime: "2025-03-15T11:00",
-      color: "hsl(200, 80%, 50%)",
-    },
-    {
-      id: 2,
-      name: "Lunch",
-      startTime: "2025-03-15T12:00",
-      endTime: "2025-03-15T13:00",
-      color: "hsl(0, 75%, 60%)",
-    },
-  ]);
+  const [events, setEvents] = useState<EventType[]>([]); // Start with empty array
+
+  useEffect(() => {
+    const savedEvents = localStorage.getItem("events");
+    if (savedEvents) {
+      try {
+        setEvents(JSON.parse(savedEvents));
+      } catch (error) {
+        console.error("Error parsing saved events:", error);
+        // Only add sample events if localStorage is empty/corrupted
+        setEvents([
+          {
+            id: 1,
+            name: "Meeting",
+            startTime: "2025-03-15T10:00",
+            endTime: "2025-03-15T11:00",
+            color: "hsl(200, 80%, 50%)",
+          },
+          {
+            id: 2,
+            name: "Lunch",
+            startTime: "2025-03-15T12:00",
+            endTime: "2025-03-15T13:00",
+            color: "hsl(0, 75%, 60%)",
+          },
+        ]);
+      }
+    }
+  }, []);
+
   // Modal state for creating/editing events
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);

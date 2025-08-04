@@ -7,6 +7,13 @@ body,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .calendar-container {
   height: 100vh;
   width: 100%;
@@ -37,6 +44,11 @@ body,
   padding: 8px;
   display: flex;
   flex-direction: column;
+}
+
+.calendar-day.selected {
+  background-color: rgba(66, 133, 244, 0.1);
+  border: 2px solid #4285f4;
 }
 
 .calendar-day.outside-month {

@@ -12,14 +12,14 @@ const App: React.FC = () => {
       name: "Meeting",
       startTime: "2025-03-15T10:00",
       endTime: "2025-03-15T11:00",
-      color: "#3498db",
+      color: "hsl(200, 80%, 50%)",
     },
     {
       id: 2,
       name: "Lunch",
       startTime: "2025-03-15T12:00",
       endTime: "2025-03-15T13:00",
-      color: "#e74c3c",
+      color: "hsl(0, 75%, 60%)",
     },
   ]);
   // Modal state for creating/editing events

@@ -30,7 +30,12 @@ const App: React.FC = () => {
   useEffect(() => {
     const savedEvents = localStorage.getItem("events");
     if (savedEvents) {
-      setEvents(JSON.parse(savedEvents));
+      try {
+        setEvents(JSON.parse(savedEvents));
+      } catch (error) {
+        console.error("Error parsing saved events:", error);
+        setEvents([]);
+      }
     }
   }, []);
 

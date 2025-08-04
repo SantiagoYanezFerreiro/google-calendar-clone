@@ -9,9 +9,9 @@ import {
   endOfMonth,
   format,
 } from "date-fns";
-import { EventType } from "../types/eventTypes.ts";
+import { EventType } from "../types/eventTypes";
 import Day from "./Day";
-import OverflowModal from "./OverflowModal.tsx";
+import OverflowModal from "./OverflowModal";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../styles.css";
 

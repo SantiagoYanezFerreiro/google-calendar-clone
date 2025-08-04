@@ -64,7 +64,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="app">
       <Calendar
         events={events}
         onEventClick={handleEventClick}

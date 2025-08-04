@@ -27,6 +27,8 @@ body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #dadce0;
+  padding: 16px;
+  gap: 16px; /* Space between elements */
 }
 
 .calendar-grid {

@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import { EventType } from "../types/eventTypes.jsx";
+import { EventType } from "../types/eventTypes";
 import "../styles.css";
 
 interface EventProps {
@@ -9,16 +9,9 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = ({ event, onClick }) => {
-  const eventClass =
-    event.color === "red"
-      ? "event red"
-      : event.color === "blue"
-      ? "event blue"
-      : "event green";
-
   return (
     <div
-      className={eventClass}
+      className="event"
       style={{ backgroundColor: event.color }}
       role="button"
       tabIndex={0}
@@ -31,16 +24,21 @@ const Event: React.FC<EventProps> = ({ event, onClick }) => {
           onClick(event);
         }
       }}
+      aria-label={`${event.name} ${
+        event.allDay
+          ? "All Day"
+          : `${format(new Date(event.startTime), "h:mm a")} - ${format(
+              new Date(event.endTime),
+              "h:mm a"
+            )}`
+      }`}
     >
       <p className="event-name-time">
         <span className="event-name">{event.name}</span>
         <span className="event-time">
           {event.allDay
             ? "All Day"
-            : `${format(new Date(event.startTime), "h:mm a")} - ${format(
-                new Date(event.endTime),
-                "h:mm a"
-              )}`}
+            : format(new Date(event.startTime), "h:mm a").toUpperCase()}
         </span>
       </p>
     </div>

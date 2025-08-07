@@ -17,6 +17,8 @@ body {
 .calendar-container {
   height: 100vh;
   width: 100%;
+  max-width: 1500px; /* Add this */
+  margin: 0 auto; /* Center it */
   display: flex;
   flex-direction: column;
 }

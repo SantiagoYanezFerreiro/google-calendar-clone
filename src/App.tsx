@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "./components/Calendar";
 import EventModal from "./components/EventModal";
 import { EventType } from "./types/eventTypes";
@@ -39,18 +39,6 @@ const App: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const savedEvents = localStorage.getItem("events");
-    if (savedEvents) {
-      try {
-        setEvents(JSON.parse(savedEvents));
-      } catch (error) {
-        console.error("Error parsing saved events:", error);
-        setEvents([]);
-      }
-    }
-  }, []);
 
   // Save a new event or update an existing event handleSaveEvent
   const handleSaveEvent = async (event: EventType) => {

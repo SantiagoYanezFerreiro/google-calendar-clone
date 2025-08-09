@@ -8,6 +8,7 @@ interface EventModalProps {
   onClose: () => void;
   onSave: (event: EventType) => Promise<void>;
   onDelete: (id: number) => void;
+  selectedDate: Date;
 }
 
 const EventModal: React.FC<EventModalProps> = ({
@@ -15,16 +16,22 @@ const EventModal: React.FC<EventModalProps> = ({
   onClose,
   onSave,
   onDelete,
+  selectedDate,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [error, setError] = useState("");
 
-  const getDefaultEventTime = (hours: number, minutes: number = 0) => {
-    const now = new Date();
-    now.setHours(hours, minutes, 0, 0);
-    return format(now, "yyyy-MM-dd'T'HH:mm");
+  const getDefaultEventTime = (
+    hours: number,
+    minutes: number = 0,
+    date?: Date
+  ) => {
+    const targetDate = date || selectedDate || new Date();
+    const eventDate = new Date(targetDate);
+    eventDate.setHours(hours, minutes, 0, 0);
+    return format(eventDate, "yyyy-MM-dd'T'HH:mm");
   };
 
   const [eventData, setEventData] = useState<EventType & { allDay?: boolean }>({
@@ -32,10 +39,10 @@ const EventModal: React.FC<EventModalProps> = ({
     name: event?.name || "",
     startTime: event?.startTime
       ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(9),
+      : getDefaultEventTime(9, 0, selectedDate),
     endTime: event?.endTime
       ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-      : getDefaultEventTime(10),
+      : getDefaultEventTime(10, 0, selectedDate),
     color: event?.color || "hsl(200, 80%, 50%)",
     allDay: event?.allDay ?? false,
   });
@@ -53,8 +60,8 @@ const EventModal: React.FC<EventModalProps> = ({
       setEventData({
         id: Date.now(),
         name: "",
-        startTime: getDefaultEventTime(9),
-        endTime: getDefaultEventTime(10),
+        startTime: getDefaultEventTime(9, 0, selectedDate),
+        endTime: getDefaultEventTime(10, 0, selectedDate),
         color: "hsl(200, 80%, 50%)",
         allDay: false,
       });
@@ -64,15 +71,15 @@ const EventModal: React.FC<EventModalProps> = ({
         name: event.name || "",
         startTime: event.startTime
           ? format(new Date(event.startTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(9),
+          : getDefaultEventTime(9, 0, selectedDate),
         endTime: event.endTime
           ? format(new Date(event.endTime), "yyyy-MM-dd'T'HH:mm")
-          : getDefaultEventTime(10),
+          : getDefaultEventTime(10, 0, selectedDate),
         color: event.color || "hsl(200, 80%, 50%)",
         allDay: event.allDay || false,
       });
     }
-  }, [event]);
+  }, [event, selectedDate, getDefaultEventTime]);
 
   useEffect(() => {
     const firstInput = modalRef.current?.querySelector('input[name="name"]');

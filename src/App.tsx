@@ -86,6 +86,7 @@ const App: React.FC = () => {
       {isModalOpen && (
         <EventModal
           event={selectedEvent}
+          selectedDate={selectedDate}
           onClose={() => setIsModalOpen(false)}
           onSave={handleSaveEvent}
           onDelete={handleDeleteEvent}

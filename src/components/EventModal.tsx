@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { EventType } from "../types/eventTypes";
 import "../styles.css";
 import { format } from "date-fns";
@@ -39,6 +39,14 @@ const EventModal: React.FC<EventModalProps> = ({
     color: event?.color || "hsl(200, 80%, 50%)",
     allDay: event?.allDay ?? false,
   });
+
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    const timeout = setTimeout(() => {
+      onClose();
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [onClose]);
 
   useEffect(() => {
     if (!event) {
@@ -89,7 +97,7 @@ const EventModal: React.FC<EventModalProps> = ({
 
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [handleClose]);
 
   useEffect(() => {
     const handleTabKey = (e: KeyboardEvent) => {
@@ -192,14 +200,6 @@ const EventModal: React.FC<EventModalProps> = ({
     onClose();
   };
 
-  const handleClose = () => {
-    setIsClosing(true);
-    const timeout = setTimeout(() => {
-      onClose();
-    }, 300);
-    return () => clearTimeout(timeout);
-  };
-
   const formatDisplayTime = (time: string) => {
     try {
       return format(new Date(time), "h:mm a").toUpperCase();
@@ -225,7 +225,10 @@ const EventModal: React.FC<EventModalProps> = ({
         }}
       >
         <div className="modal-header">
-          <h3>{event ? "Edit Event" : "Add Event"}</h3>
+          <h3 className="modal-date-header">
+            {event ? "Edit Event" : "Add Event"}
+            {}
+          </h3>
           <button
             type="button"
             onClick={handleClose}

@@ -325,7 +325,7 @@ const EventModal: React.FC<EventModalProps> = ({
           </div>
 
           {error && (
-            <p className="error" role="alert">
+            <p className="error-message" role="alert">
               {error}
             </p>
           )}

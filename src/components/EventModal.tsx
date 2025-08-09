@@ -246,71 +246,83 @@ const EventModal: React.FC<EventModalProps> = ({
           </button>
         </div>
         <div className="modal-body">
-          <label htmlFor="eventName">
-            Event Name<span>*</span>
-          </label>
-          {event && (
-            <span className="event-time">
-              {eventData.allDay
-                ? format(new Date(event.startTime), "MMM d, yyyy")
-                : `${formatDisplayTime(event.startTime)} - ${formatDisplayTime(
-                    event.endTime
-                  )}`}
-            </span>
-          )}
-          <input
-            type="text"
-            id="eventName"
-            name="name"
-            value={eventData.name}
-            onChange={handleChange}
-            required
-          />
-
-          <div className="all-day-container">
-            <label>
-              <input
-                type="checkbox"
-                checked={eventData.allDay}
-                onChange={handleAllDayChange}
-              />
-              All Day
+          <div className="form-field">
+            <label htmlFor="eventName">
+              Event Name<span style={{ color: "red" }}>*</span>
             </label>
+            <input
+              type="text"
+              id="eventName"
+              name="name"
+              value={eventData.name}
+              onChange={handleChange}
+              required
+            />
+            {event && (
+              <span className="event-time-display">
+                {eventData.allDay
+                  ? format(new Date(event.startTime), "MMM d, yyyy")
+                  : `${formatDisplayTime(
+                      event.startTime
+                    )} - ${formatDisplayTime(event.endTime)}`}
+              </span>
+            )}
+
+            <div className="form-field">
+              <div className="all-day-container">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={eventData.allDay}
+                    onChange={handleAllDayChange}
+                  />
+                  All Day
+                </label>
+              </div>
+            </div>
           </div>
 
-          <label htmlFor="startTime">Start Time</label>
-          <input
-            type="datetime-local"
-            id="startTime"
-            name="startTime"
-            value={eventData.startTime}
-            onChange={handleChange}
-            disabled={eventData.allDay}
-            required={!eventData.allDay}
-          />
+          <div className="time-fields">
+            <div className="form-field">
+              <label htmlFor="startTime">Start Time</label>
+              <input
+                type="datetime-local"
+                id="startTime"
+                name="startTime"
+                value={eventData.startTime}
+                onChange={handleChange}
+                disabled={eventData.allDay}
+                required={!eventData.allDay}
+              />
+            </div>
 
-          <label htmlFor="endTime">End Time</label>
-          <input
-            type="datetime-local"
-            id="endTime"
-            name="endTime"
-            value={eventData.endTime}
-            onChange={handleChange}
-            disabled={eventData.allDay}
-            required={!eventData.allDay}
-          />
+            <div className="form-field">
+              <label htmlFor="endTime">End Time</label>
+              <input
+                type="datetime-local"
+                id="endTime"
+                name="endTime"
+                value={eventData.endTime}
+                onChange={handleChange}
+                disabled={eventData.allDay}
+                required={!eventData.allDay}
+              />
+            </div>
+          </div>
 
-          <label htmlFor="color">Color:</label>
-          <select
-            id="color"
-            name="color"
-            value={eventData.color}
-            onChange={handleChange}
-          >
-            <option value="hsl(0, 75%, 60%)">Red</option>
-            <option value="hsl(200, 80%, 50%)">Blue</option>
-            <option value="hsl(150, 80%, 30%)">Green</option>
-          </select>
+          <div className="form-field">
+            <label htmlFor="color">Color:</label>
+            <select
+              id="color"
+              name="color"
+              value={eventData.color}
+              onChange={handleChange}
+            >
+              <option value="hsl(0, 75%, 60%)">Red</option>
+              <option value="hsl(200, 80%, 50%)">Blue</option>
+              <option value="hsl(150, 80%, 30%)">Green</option>
+            </select>
+          </div>
 
           {error && (
             <p className="error" role="alert">
@@ -319,16 +331,24 @@ const EventModal: React.FC<EventModalProps> = ({
           )}
 
           <div className="modal-footer">
-            <button type="submit" className="save" disabled={isLoading}>
-              {isLoading ? "Saving..." : event ? "Save" : "Add"}
+            <button
+              type="button"
+              onClick={handleClose}
+              className="btn-secondary"
+            >
+              Cancel
             </button>
             {event && (
-              <button type="button" onClick={handleDelete} className="delete">
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="btn-delete"
+              >
                 Delete
               </button>
             )}
-            <button type="button" onClick={handleClose} className="close">
-              Cancel
+            <button type="submit" className="btn-primary" disabled={isLoading}>
+              {isLoading ? "Saving..." : event ? "Save" : "Add"}
             </button>
           </div>
         </div>

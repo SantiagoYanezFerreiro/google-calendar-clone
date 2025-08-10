@@ -23,16 +23,15 @@ const EventModal: React.FC<EventModalProps> = ({
   const [isClosing, setIsClosing] = useState(false);
   const [error, setError] = useState("");
 
-  const getDefaultEventTime = (
-    hours: number,
-    minutes: number = 0,
-    date?: Date
-  ) => {
-    const targetDate = date || selectedDate || new Date();
-    const eventDate = new Date(targetDate);
-    eventDate.setHours(hours, minutes, 0, 0);
-    return format(eventDate, "yyyy-MM-dd'T'HH:mm");
-  };
+  const getDefaultEventTime = useCallback(
+    (hours: number, minutes: number = 0, date?: Date) => {
+      const targetDate = date || selectedDate || new Date();
+      const eventDate = new Date(targetDate);
+      eventDate.setHours(hours, minutes, 0, 0);
+      return format(eventDate, "yyyy-MM-dd'T'HH:mm");
+    },
+    [selectedDate]
+  );
 
   const [eventData, setEventData] = useState<EventType & { allDay?: boolean }>({
     id: event?.id || Date.now(),

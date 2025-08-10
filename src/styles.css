@@ -64,6 +64,27 @@ button:hover {
   gap: 16px;
 }
 
+.calendar-header-month {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #333;
+  /* Month comes first in the layout */
+}
+
+.calendar-header-today {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  /* Today button comes second */
+}
+
+.calendar-controls {
+  display: flex;
+  gap: 8px;
+  /* Navigation arrows come third */
+}
+
 .calendar-header button {
   padding: 8px;
   border-radius: 50%;
@@ -72,27 +93,6 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.calendar-header-month {
-  margin: 0;
-  margin-left: 0;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #333;
-  order: -1;
-}
-
-.calendar-header-today {
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  order: 1;
-}
-
-.calendar-controls {
-  order: 2;
-  margin-left: auto; /* Push controls to the right */
 }
 
 .calendar-grid {

@@ -314,9 +314,9 @@ button:hover {
 }
 
 .color-option {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px; /* Square with rounded corners */
   border: 2px solid transparent;
   cursor: pointer;
   transition: border-color 0.2s ease;
@@ -340,10 +340,9 @@ button:hover {
   border-top: 1px solid #e0e0e0;
 }
 
-.btn-secondary,
 .btn-delete,
 .btn-primary {
-  padding: 10px 24px;
+  padding: 12px 32px; /* Bigger buttons */
   border-radius: 4px;
   font-size: 14px;
   font-weight: 500;
@@ -352,34 +351,26 @@ button:hover {
   transition: all 0.2s ease;
 }
 
-.btn-secondary {
-  background: white;
-  color: #333;
-  border-color: #dadce0;
-}
-
-.btn-secondary:hover {
-  background: #f1f3f4;
-}
-
 .btn-delete {
-  background: #fce8e6;
-  color: #d93025;
-  border-color: #d93025;
+  background: hsl(0, 75%, 95%);
+  color: hsl(0, 75%, 10%);
+  border-color: hsl(0, 75%, 60%);
 }
 
 .btn-delete:hover {
-  background: #fad2cf;
+  background: hsl(0, 75%, 90%);
 }
 
 .btn-primary {
-  background: #1a73e8;
+  background: hsl(150, 80%, 30%); /* Green color as per requirements */
   color: white;
-  border-color: #1a73e8;
+  border-color: hsl(150, 80%, 30%);
+  font-size: 16px; /* Bigger text */
+  padding: 14px 40px; /* Even bigger for Add button */
 }
 
 .btn-primary:hover {
-  background: #1557b0;
+  background: hsl(150, 80%, 25%);
 }
 
 .btn-primary:disabled {

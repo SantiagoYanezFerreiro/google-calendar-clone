@@ -310,17 +310,56 @@ const EventModal: React.FC<EventModalProps> = ({
           </div>
 
           <div className="form-field">
-            <label htmlFor="color">Color:</label>
-            <select
-              id="color"
-              name="color"
-              value={eventData.color}
-              onChange={handleChange}
-            >
-              <option value="hsl(0, 75%, 60%)">Red</option>
-              <option value="hsl(200, 80%, 50%)">Blue</option>
-              <option value="hsl(150, 80%, 30%)">Green</option>
-            </select>
+            <label>Color:</label>
+            <div className="color-picker">
+              <div className="color-options">
+                <div
+                  className={`color-option ${
+                    eventData.color === "hsl(0, 75%, 60%)" ? "selected" : ""
+                  }`}
+                  style={{ backgroundColor: "hsl(0, 75%, 60%)" }}
+                  onClick={() =>
+                    setEventData((prev) => ({
+                      ...prev,
+                      color: "hsl(0, 75%, 60%)",
+                    }))
+                  }
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Red color"
+                />
+                <div
+                  className={`color-option ${
+                    eventData.color === "hsl(200, 80%, 50%)" ? "selected" : ""
+                  }`}
+                  style={{ backgroundColor: "hsl(200, 80%, 50%)" }}
+                  onClick={() =>
+                    setEventData((prev) => ({
+                      ...prev,
+                      color: "hsl(200, 80%, 50%)",
+                    }))
+                  }
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Blue color"
+                />
+                <div
+                  className={`color-option ${
+                    eventData.color === "hsl(150, 80%, 30%)" ? "selected" : ""
+                  }`}
+                  style={{ backgroundColor: "hsl(150, 80%, 30%)" }}
+                  onClick={() =>
+                    setEventData((prev) => ({
+                      ...prev,
+                      color: "hsl(150, 80%, 30%)",
+                    }))
+                  }
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Green color"
+                />
+              </div>
+            </div>
           </div>
 
           {error && (

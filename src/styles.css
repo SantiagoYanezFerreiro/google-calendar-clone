@@ -143,16 +143,16 @@ button:hover {
 }
 
 .event {
-  padding: 4px 8px;
-  margin: 1px 0;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  background-color: var(--event-color, hsl(0, 75%, 60%)); /* Default to red */
   color: white;
+  padding: 2px 6px;
+  margin-bottom: 2px;
+  border-radius: 3px;
+  font-size: 0.75rem;
   cursor: pointer;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: filter 0.2s ease;
+  white-space: nowrap;
 }
 
 .event:hover {

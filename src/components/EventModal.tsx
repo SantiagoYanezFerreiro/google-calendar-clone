@@ -267,17 +267,15 @@ const EventModal: React.FC<EventModalProps> = ({
               </span>
             )}
 
-            <div className="form-field">
-              <div className="all-day-container">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={eventData.allDay}
-                    onChange={handleAllDayChange}
-                  />
-                  All Day
-                </label>
-              </div>
+            <div className="all-day-container">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={eventData.allDay}
+                  onChange={handleAllDayChange}
+                />
+                All Day
+              </label>
             </div>
           </div>
 

@@ -44,6 +44,7 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
             <div
               className="overflow-event"
               key={index}
+              style={{ borderLeft: `4px solid ${event.color}` }} // Add color indicator
               onClick={() => onEventClick(event)}
               role="button"
               tabIndex={0}
@@ -68,11 +69,6 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
               </p>
             </div>
           ))}
-        </div>
-        <div className="modal-footer">
-          <button onClick={handleClose} className="close-button">
-            Close
-          </button>
         </div>
       </div>
     </div>

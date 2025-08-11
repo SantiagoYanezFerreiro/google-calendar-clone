@@ -67,32 +67,25 @@ button:hover {
 .calendar-header-month {
   margin: 0;
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 700;
   color: #333;
-  /* Month comes first in the layout */
-}
-
-.calendar-header-today {
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  /* Today button comes second */
-}
-
-.calendar-controls {
-  display: flex;
-  gap: 8px;
-  /* Navigation arrows come third */
 }
 
 .calendar-header button {
-  padding: 8px;
-  border-radius: 50%;
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.calendar-header-today {
+  font-weight: 500;
+  padding: 10px 30px;
+}
+
+.calendar-controls {
+  display: flex;
 }
 
 .calendar-grid {
@@ -436,9 +429,12 @@ button:hover {
 
 .overflow-event {
   padding: 12px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: background-color 0.2s ease;
+  color: white; /* White text like main events */
+  border-radius: 4px;
+  margin-bottom: 4px;
 }
 
 .overflow-event:last-child {
@@ -458,12 +454,13 @@ button:hover {
 
 .overflow-event .event-name {
   font-weight: 500;
-  color: #333;
+  color: white;
 }
 
 .overflow-event .event-time {
-  color: #666;
+  color: white;
   font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .close-button {

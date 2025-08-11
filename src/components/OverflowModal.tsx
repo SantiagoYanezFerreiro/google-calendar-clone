@@ -44,7 +44,7 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
             <div
               className="overflow-event"
               key={index}
-              style={{ borderLeft: `4px solid ${event.color}` }} // Add color indicator
+              style={{ backgroundColor: "red" }} // Add color indicator
               onClick={() => onEventClick(event)}
               role="button"
               tabIndex={0}
@@ -56,7 +56,7 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
               aria-label={`Edit Event ${event.name}`}
             >
               <p className="event-name-time">
-                <span className="event-name">{event.name}:</span>
+                <span className="event-name">{event.name}</span>
                 {"  "}
                 <span className="event-time">
                   {event.allDay

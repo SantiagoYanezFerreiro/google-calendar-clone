@@ -367,13 +367,6 @@ const EventModal: React.FC<EventModalProps> = ({
           )}
 
           <div className="modal-footer">
-            <button
-              type="button"
-              onClick={handleClose}
-              className="btn-secondary"
-            >
-              Cancel
-            </button>
             {event && (
               <button
                 type="button"
@@ -383,7 +376,11 @@ const EventModal: React.FC<EventModalProps> = ({
                 Delete
               </button>
             )}
-            <button type="submit" className="btn-primary" disabled={isLoading}>
+            <button
+              type="submit"
+              className="btn-primary btn-large"
+              disabled={isLoading}
+            >
               {isLoading ? "Saving..." : event ? "Save" : "Add"}
             </button>
           </div>

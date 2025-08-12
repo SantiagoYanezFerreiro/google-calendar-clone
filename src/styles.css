@@ -77,15 +77,26 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
 }
 
 .calendar-header-today {
   font-weight: 500;
-  padding: 10px 30px;
+  padding: 5px 30px; /* Increased horizontal padding */
+  width: auto; /* Override the general button width */
+  height: auto; /* Override the general button height */
 }
 
-.calendar-controls {
+.calendar-header .calendar-controls {
   display: flex;
+  gap: 0;
+}
+
+.calendar-header .calendar-controls button {
+  margin: 0 !important; /* Force remove margins */
+  border-radius: 0 !important; /* Force remove border radius */
+  width: 36px;
+  height: 36px;
 }
 
 .calendar-grid {
@@ -99,7 +110,7 @@ button:hover {
 
 .calendar-day {
   background: white;
-  min-height: 100px;
+  min-height: 0px;
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -122,9 +133,10 @@ button:hover {
 .day-number {
   font-weight: 500;
   margin-bottom: 4px;
+  margin-top: 15px;
 }
 
-.calendar-day.today .day-number {
+.calendar-day.today {
   background-color: #1a73e8;
   color: white;
   border-radius: 50%;
@@ -357,6 +369,12 @@ button:hover {
 
 .btn-secondary:hover {
   background: #f1f3f4;
+}
+
+.btn-large {
+  padding: 16px 180px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
 }
 
 .btn-delete {

@@ -116,8 +116,15 @@ const Calendar: React.FC<CalendarProps> = ({
         {days.map((day, index) => {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
-          const isPastDate = day < today;
-          const isCurrentMonth = day.getMonth() === currentMonth.getMonth();
+          const dayWithoutTime = new Date(day);
+          dayWithoutTime.setHours(0, 0, 0, 0);
+
+          const isCurrentMonth =
+            day.getMonth() === currentMonth.getMonth() &&
+            day.getFullYear() === currentMonth.getFullYear();
+          // ONLY past dates within current month should get past-date class
+          const isPastDate = isCurrentMonth && dayWithoutTime < today;
+
           const eventsForDay = getEventsForDay(day);
 
           return (

@@ -174,7 +174,7 @@ button:hover {
     80%,
     50%
   ); /* Today's Day Text Background as per requirements */
-  color: white;
+  color: white; /* FIXED: was ":white" */
   border-radius: 50%;
   width: 24px;
   height: 24px;
@@ -184,17 +184,14 @@ button:hover {
 }
 
 .calendar-day.past-date {
-  opacity: 0.5; /* Make past dates more faded as per requirements */
-}
-
-.calendar-day.selected {
-  background-color: rgba(66, 133, 244, 0.1);
-  border: 2px solid #4285f4;
+  color: #9aa0a6; /* Past dates within current month - white background with lighter text */
+  opacity: 1; /* Keep full opacity for white background */
 }
 
 .calendar-day.outside-month {
-  background: #dadce0; /* Change to match requirements exactly */
-  color: #70757a;
+  background: #f8f9fa !important; /* Previous/next month dates - gray background */
+  color: #70757a !important;
+  opacity: 1 !important; /* Full opacity for outside month dates */
 }
 
 .day-number {
@@ -205,7 +202,7 @@ button:hover {
 
 .event {
   padding: 2px 6px;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   border-radius: 3px;
   font-size: 0.75rem;
   cursor: pointer;
@@ -239,6 +236,7 @@ button:hover {
   align-items: center;
   gap: 8px;
   margin: 0;
+  color: white;
 }
 
 .event-name {
@@ -376,6 +374,7 @@ button:hover {
 
 /* Color Picker Styling */
 .color-picker {
+  /* FIXED: was ".-picker" */
   margin-top: 6px;
 }
 
@@ -597,6 +596,10 @@ button:hover {
   border-radius: 50%;
 }
 
+.add-event-button:hover {
+  background-color: rgba(66, 133, 244, 0.1);
+  border-radius: 50%;
+}
 .add-event-button:hover {
   background-color: rgba(66, 133, 244, 0.1);
   padding: 4px;

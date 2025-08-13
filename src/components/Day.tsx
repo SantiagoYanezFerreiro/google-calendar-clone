@@ -30,14 +30,13 @@ export const Day = memo(
     onMoreClick,
     showDayName,
   }: DayProps) => {
-    const dayClass = `calendar-day ${!isCurrentMonth ? "outside-month" : ""}
-      ${isPastDate ? "past-date" : ""}
-     ${isSelected ? "selected" : ""}
-     ${
-       format(day, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")
-         ? "today"
-         : ""
-     }`.trim();
+    const dayClass = `calendar-day ${!isCurrentMonth ? "outside-month" : ""} ${
+      isPastDate && isCurrentMonth ? "past-date" : ""
+    } ${isSelected ? "selected" : ""} ${
+      format(day, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")
+        ? "today"
+        : ""
+    }`.trim();
 
     const visibleEvents = events.slice(0, maxVisibleEvents);
     const dayOverflowEvents = events.slice(maxVisibleEvents);

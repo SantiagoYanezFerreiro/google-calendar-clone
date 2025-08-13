@@ -11,7 +11,7 @@ interface EventProps {
 const Event: React.FC<EventProps> = ({ event, onClick }) => {
   return (
     <div
-      className="event"
+      className={`event ${event.allDay ? "all-day-event" : "timed-event"}`}
       style={{ backgroundColor: event.color }}
       role="button"
       tabIndex={0}

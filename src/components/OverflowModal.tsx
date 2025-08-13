@@ -44,7 +44,7 @@ const OverflowModal: React.FC<OverflowModalProps> = ({
             <div
               className="overflow-event"
               key={index}
-              style={{ backgroundColor: "red" }} // Add color indicator
+              style={{ backgroundColor: event.color }}
               onClick={() => onEventClick(event)}
               role="button"
               tabIndex={0}

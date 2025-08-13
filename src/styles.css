@@ -169,7 +169,11 @@ button:hover {
 
 /* Add back the .calendar-day.today .day-number rule for proper today styling */
 .calendar-day.today .day-number {
-  background-color: #1a73e8;
+  background-color: hsl(
+    200,
+    80%,
+    50%
+  ); /* Today's Day Text Background as per requirements */
   color: white;
   border-radius: 50%;
   width: 24px;
@@ -200,7 +204,6 @@ button:hover {
 }
 
 .event {
-  color: white; /* All day events should have white text */
   padding: 2px 6px;
   margin-bottom: 2px;
   border-radius: 3px;
@@ -211,9 +214,14 @@ button:hover {
   white-space: nowrap;
 }
 
-/* Add specific styling for timed events */
+/* All day events have white text */
+.event.all-day-event {
+  color: white;
+}
+
+/* Timed events have darker text */
 .event.timed-event {
-  color: #777; /* Timed events should have darker text as per requirements */
+  color: #777;
 }
 
 .event:hover {

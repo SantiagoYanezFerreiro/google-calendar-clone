@@ -12,8 +12,8 @@ import {
 import { EventType } from "../types/eventTypes";
 import Day from "./Day";
 import OverflowModal from "./OverflowModal";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../styles.css";
+import { CalendarHeader } from "./CalendarHeader";
 
 interface CalendarProps {
   events: EventType[];
@@ -105,30 +105,12 @@ const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div className="calendar-container">
-      <header className="calendar-header">
-        <button
-          className="calendar-header-today"
-          onClick={() => setCurrentMonth(new Date())}
-          aria-label="Go to today"
-        >
-          Today
-        </button>
-        <button
-          onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-          aria-label="Previous month"
-        >
-          <FaChevronLeft />
-        </button>
-        <button
-          onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-          aria-label="Next month"
-        >
-          <FaChevronRight />
-        </button>
-        <h2 className="calendar-header-month">
-          {format(currentMonth, "MMMM yyyy")}
-        </h2>
-      </header>
+      <CalendarHeader
+        currentMonth={currentMonth}
+        onTodayClick={() => setCurrentMonth(new Date())}
+        onPreviousMonth={() => setCurrentMonth(subMonths(currentMonth, 1))}
+        onNextMonth={() => setCurrentMonth(addMonths(currentMonth, 1))}
+      />
 
       <div className="calendar-grid">
         {days.map((day, index) => {

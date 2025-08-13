@@ -255,10 +255,11 @@ button:hover {
   white-space: nowrap;
 }
 
-.event-time-display {
+span .event-time-display {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 16px;
+  margin-top: 16px; /* Increased space between event name and timestamps */
   padding: 8px 10px;
   background: #f8f9fa;
   border-radius: 4px;
@@ -302,9 +303,6 @@ button:hover {
   margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 12px;
-}
-
-.modal-date-header {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 500;
@@ -444,6 +442,20 @@ button:hover {
   font-weight: 600 !important;
 }
 
+/* Only apply large styling to add event button when it has add-event-only class */
+.btn-large:not(.edit-event-btn) {
+  padding: 16px 180px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+/* Override large button styling for edit events */
+.btn-large.edit-event-btn {
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
 .btn-delete {
   background: hsl(0, 75%, 95%);
   color: hsl(0, 75%, 10%);
@@ -460,6 +472,30 @@ button:hover {
   border-color: hsl(150, 80%, 30%);
   font-size: 16px; /* Bigger text */
   padding: 14px 40px; /* Even bigger for Add button */
+}
+
+/* For edit events, save and delete buttons should share space equally */
+.modal-footer.edit-event {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.modal-footer.edit-event .btn-delete,
+.modal-footer.edit-event .btn-primary {
+  flex: 1;
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+/* Override any large button styling for edit event modals */
+.modal-footer.edit-event .btn-large {
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
 }
 
 .btn-primary:hover {

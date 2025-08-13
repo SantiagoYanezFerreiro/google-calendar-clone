@@ -366,7 +366,7 @@ const EventModal: React.FC<EventModalProps> = ({
             </p>
           )}
 
-          <div className="modal-footer">
+          <div className={`modal-footer ${event ? "edit-event" : ""}`}>
             {event && (
               <button
                 type="button"
@@ -378,7 +378,9 @@ const EventModal: React.FC<EventModalProps> = ({
             )}
             <button
               type="submit"
-              className="btn-primary btn-large"
+              className={`btn-primary ${
+                event ? "edit-event-btn" : "btn-large"
+              }`}
               disabled={isLoading}
             >
               {isLoading ? "Saving..." : event ? "Save" : "Add"}

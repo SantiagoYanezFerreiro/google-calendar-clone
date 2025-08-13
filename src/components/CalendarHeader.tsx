@@ -18,9 +18,6 @@ export const CalendarHeader = memo(
   }: CalendarHeaderProps) => {
     return (
       <div className="calendar-header">
-        <h2 className="calendar-header-month">
-          {format(currentMonth, "MMMM yyyy")}
-        </h2>
         <button className="calendar-header-today" onClick={onTodayClick}>
           Today
         </button>
@@ -40,6 +37,9 @@ export const CalendarHeader = memo(
             <FaChevronRight />
           </button>
         </div>
+        <h2 className="calendar-header-month">
+          {format(currentMonth, "MMMM yyyy")}
+        </h2>
       </div>
     );
   }

@@ -199,8 +199,8 @@ button:hover {
 
 .day-number {
   font-weight: 500;
-  margin-bottom: 4px;
-  margin-top: 15px;
+  margin: auto;
+  margin-top: 2px;
 }
 
 .event {

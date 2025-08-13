@@ -25,10 +25,18 @@ export const CalendarHeader = memo(
           Today
         </button>
         <div className="calendar-controls">
-          <button onClick={onPreviousMonth} aria-label="Previous Month">
+          <button
+            onClick={onPreviousMonth}
+            aria-label="Previous Month"
+            className="calendar-control-button"
+          >
             <FaChevronLeft />
           </button>
-          <button onClick={onNextMonth} aria-label="Next Month">
+          <button
+            onClick={onNextMonth}
+            aria-label="Next Month"
+            className="calendar-control-button"
+          >
             <FaChevronRight />
           </button>
         </div>

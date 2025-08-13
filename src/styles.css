@@ -78,25 +78,59 @@ button:hover {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  margin: 0; /* Remove any default margins */
 }
 
 .calendar-header-today {
   font-weight: 500;
-  padding: 5px 30px; /* Increased horizontal padding */
-  width: auto; /* Override the general button width */
-  height: auto; /* Override the general button height */
+  padding: 8px 20px !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 4px !important;
+  background: white !important;
+  color: #333 !important;
+  border: 1px solid #dadce0 !important;
+  margin: 0 !important; /* Ensure no margin */
+}
+
+.calendar-header-today:hover {
+  background: #f1f3f4 !important;
 }
 
 .calendar-header .calendar-controls {
   display: flex;
-  gap: 0;
+  gap: 0 !important;
+  margin: 0 !important;
 }
 
-.calendar-header .calendar-controls button {
-  margin: 0 !important; /* Force remove margins */
-  border-radius: 0 !important; /* Force remove border radius */
-  width: 36px;
-  height: 36px;
+.calendar-header .calendar-controls .calendar-control-button {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 1px solid #dadce0 !important;
+  border-right: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: white !important;
+  color: #333 !important;
+}
+
+.calendar-header .calendar-controls .calendar-control-button:hover {
+  background: #f1f3f4 !important;
+}
+
+.calendar-header .calendar-controls .calendar-control-button:first-child {
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+}
+
+.calendar-header .calendar-controls .calendar-control-button:last-child {
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+  border-right: 1px solid #dadce0 !important;
 }
 
 .calendar-grid {
@@ -114,6 +148,29 @@ button:hover {
   padding: 8px;
   display: flex;
   flex-direction: column;
+}
+
+.calendar-day .day-number.today {
+  background-color: #1a73e8;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add back the .calendar-day.today .day-number rule for proper today styling */
+.calendar-day.today .day-number {
+  background-color: #1a73e8;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calendar-day.past-date {
@@ -134,17 +191,6 @@ button:hover {
   font-weight: 500;
   margin-bottom: 4px;
   margin-top: 15px;
-}
-
-.calendar-day.today {
-  background-color: #1a73e8;
-  color: white;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .event {
@@ -183,6 +229,9 @@ button:hover {
   white-space: nowrap;
 }
 
+#eventName {
+  max-width: 350px;
+}
 .event-time {
   font-size: 0.75rem;
   opacity: 0.9;
@@ -193,7 +242,7 @@ button:hover {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 16px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   background: #f8f9fa;
   border-radius: 4px;
 }
@@ -291,10 +340,16 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-top: 10px;
 }
 
 .all-day-container input[type="checkbox"] {
   margin: 0;
+}
+
+#startTime,
+#endTime {
+  max-width: 160px;
 }
 
 .time-fields {
@@ -531,4 +586,6 @@ button:hover {
 
 .add-event-button:hover {
   background-color: rgba(66, 133, 244, 0.1);
+  padding: 4px;
+  border-radius: 50%;
 }

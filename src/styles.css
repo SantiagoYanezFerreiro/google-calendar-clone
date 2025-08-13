@@ -260,8 +260,6 @@ button:hover {
   color: #666;
   margin-bottom: 16px;
   margin-top: 16px; /* Increased space between event name and timestamps */
-  padding: 8px 10px;
-  background: #f8f9fa;
   border-radius: 4px;
 }
 

@@ -98,24 +98,30 @@ button:hover {
 }
 
 .calendar-header .calendar-controls {
-  display: flex;
+  display: flex !important;
   gap: 0 !important;
-  margin: 0 !important;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .calendar-header .calendar-controls .calendar-control-button {
   margin: 0 !important;
   padding: 0 !important;
+  border: none !important;
   border-radius: 0 !important;
   width: 36px !important;
   height: 36px !important;
-  border: 1px solid #dadce0 !important;
-  border-right: none !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   background: white !important;
   color: #333 !important;
+  border-right: 1px solid #dadce0 !important;
+}
+
+.calendar-header .calendar-controls .calendar-control-button:last-child {
+  border-right: none !important;
 }
 
 .calendar-header .calendar-controls .calendar-control-button:hover {
@@ -174,7 +180,7 @@ button:hover {
 }
 
 .calendar-day.past-date {
-  opacity: 0.6;
+  opacity: 0.5; /* Make past dates more faded as per requirements */
 }
 
 .calendar-day.selected {
@@ -183,7 +189,7 @@ button:hover {
 }
 
 .calendar-day.outside-month {
-  background: #f8f9fa;
+  background: #dadce0; /* Change to match requirements exactly */
   color: #70757a;
 }
 
@@ -194,7 +200,7 @@ button:hover {
 }
 
 .event {
-  color: white;
+  color: white; /* All day events should have white text */
   padding: 2px 6px;
   margin-bottom: 2px;
   border-radius: 3px;
@@ -203,6 +209,11 @@ button:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Add specific styling for timed events */
+.event.timed-event {
+  color: #777; /* Timed events should have darker text as per requirements */
 }
 
 .event:hover {
@@ -287,17 +298,11 @@ button:hover {
   padding-bottom: 12px;
 }
 
-.modal-body-overflow {
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-}
-
 .modal-date-header {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 500;
+  color: #555; /* Modal date header text color as per requirements */
 }
 
 .modal-body {
@@ -317,7 +322,7 @@ button:hover {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  color: #333;
+  color: #777; /* Modal form label text color as per requirements */
 }
 
 .form-field input[type="text"],
@@ -566,7 +571,7 @@ button:hover {
 
 .day-abbr {
   font-size: 0.7rem;
-  color: #70757a;
+  color: #777; /* Week name text color as per requirements */
   font-weight: 500;
   margin-bottom: 4px;
 }

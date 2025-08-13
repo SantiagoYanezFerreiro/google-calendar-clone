@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { format } from "date-fns";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -25,20 +25,22 @@ export const CalendarHeader = memo(
           Today
         </button>
         <div className="calendar-controls">
-          <button
-            onClick={onPreviousMonth}
-            aria-label="Previous Month"
-            className="calendar-control-button"
-          >
-            <FaChevronLeft />
-          </button>
-          <button
-            onClick={onNextMonth}
-            aria-label="Next Month"
-            className="calendar-control-button"
-          >
-            <FaChevronRight />
-          </button>
+          <div className="calendar-control-container">
+            <button
+              onClick={onPreviousMonth}
+              aria-label="Previous Month"
+              className="calendar-control-button"
+            >
+              <FaChevronLeft />
+            </button>
+            <button
+              onClick={onNextMonth}
+              aria-label="Next Month"
+              className="calendar-control-button"
+            >
+              <FaChevronRight />
+            </button>
+          </div>
         </div>
       </div>
     );

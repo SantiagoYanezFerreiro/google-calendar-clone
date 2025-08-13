@@ -255,7 +255,7 @@ button:hover {
   white-space: nowrap;
 }
 
-span .event-time-display {
+.event-time-display {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 16px;
@@ -303,10 +303,21 @@ span .event-time-display {
   margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 12px;
+}
+
+.modal-date-header {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 500;
   color: #555; /* Modal date header text color as per requirements */
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Add space between "Add Event" and date */
+}
+
+.modal-date-header .event-date {
+  color: #999; /* Make date slightly lighter */
+  font-weight: 400; /* Make date less bold */
 }
 
 .modal-body {
@@ -354,6 +365,13 @@ span .event-time-display {
 
 .all-day-container input[type="checkbox"] {
   margin: 0;
+  margin-right: 4px; /* Add small gap between checkbox and label */
+}
+
+.all-day-container label {
+  margin: 0; /* Remove default label margin */
+  font-weight: 400; /* Make label text normal weight */
+  color: #777;
 }
 
 #startTime,

@@ -233,7 +233,7 @@ const EventModal: React.FC<EventModalProps> = ({
         <div className="modal-header">
           <h3 className="modal-date-header">
             {event ? "Edit Event" : "Add Event"}
-            {}
+            <span className="event-date">{format(selectedDate, "M/d/yy")}</span>
           </h3>
           <button
             type="button"
@@ -247,7 +247,7 @@ const EventModal: React.FC<EventModalProps> = ({
         <div className="modal-body">
           <div className="form-field">
             <label htmlFor="eventName">
-              Event Name<span style={{ color: "red" }}>*</span>
+              Name<span style={{ color: "red" }}>*</span>
             </label>
             <input
               type="text"
@@ -268,14 +268,13 @@ const EventModal: React.FC<EventModalProps> = ({
             )}
 
             <div className="all-day-container">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={eventData.allDay}
-                  onChange={handleAllDayChange}
-                />
-                All Day
-              </label>
+              <input
+                type="checkbox"
+                id="allDay"
+                checked={eventData.allDay}
+                onChange={handleAllDayChange}
+              />
+              <label htmlFor="allDay">All Day?</label>
             </div>
           </div>
 
